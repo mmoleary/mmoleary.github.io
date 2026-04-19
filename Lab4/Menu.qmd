@@ -1,0 +1,281 @@
+---
+execute:               # Default settings for code blocks
+  warning: false       # Do not print warnings
+  message: false       # Do not print messages
+  size: "scriptsize"   # Set code size to script size
+
+format:
+  pdf:        # Specify .pdf formatting options 
+    documentclass: article     # Document Class
+    number-sections: true      # Number Sections
+    reference-section-title: "References" # Title for reference section
+    code-line-numbers: true    # Line numbers printed in code
+    cap-location: top          # Captions at the top of tables 
+    geometry:
+      - top=0.75in
+      - left=0.75in
+      - bottom=0.75in
+      - right=0.75in
+format-links: [pdf]
+---
+```{r}
+#| echo: false
+
+default_chunk_hook  <- knitr::knit_hooks$get("chunk")
+
+latex_font_size <- c("Huge", "huge", "LARGE", "Large", 
+                     "large", "normalsize", "small", 
+                     "footnotesize", "scriptsize", "tiny")
+
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- default_chunk_hook(x, options)
+  if(options$size %in% latex_font_size) {
+    paste0("\n \\", options$size, "\n\n", 
+      x, 
+      "\n\n \\normalsize"
+    )
+  } else {
+    x
+  }
+})
+
+```
+
+```{r}
+#| label: load-packages
+#| include: false
+library(tidyverse)
+library(rvest)
+```
+
+<!-- Code For Building Menu Here -->
+```{r}
+#| include: false
+breakfasts <- c("website/BerryMelonSmoothie.html",
+                "website/BiscuitsAndGravy.html",
+                "website/BreakfastCheesecake.html",
+                "website/BreakfastMuffins.html",
+                "website/ChiaParfait.html",
+                "website/GardenTomatoQuiche.html",
+                "website/OvernightOats.html",
+                "website/PumpkinToast.html",
+                "website/TropicalSmoothie.html")
+dinner <- c("website/AfricanPeanutSoup.html",
+            "website/Alfredo.html",
+            "website/ArugulaPasta.html",
+            "website/AutumnGrainBowl.html",
+            "website/BakedZiti.html",
+            "website/BBQChili.html",
+            "website/Bibimbap.html",
+            "website/BLTSalad.html",
+            "website/Burgers.html",
+            "website/CapreseSandwiches.html",
+            "website/EggplantParmesan.html",
+            "website/Enchiladas.html",
+            "website/FloridaRolls.html",
+            "website/KimchiGrilledCheese.html",
+            "website/Lasagna.html",
+            "website/LatinBowl.html",
+            "website/Meatloaf.html",
+            "website/PadThai.html",
+            "website/PastaAndPeas.html",
+            "website/Pizza.html",
+            "website/RedWineRagu.html",
+            "website/SalmonChowder.html",
+            "website/Shakshuka.html")
+
+breakfast = sample(breakfasts, 1, replace= F)
+dinners = sample(dinner, 3, replace= F)
+
+```
+
+```{r}
+#| echo: false
+# DINNER 1
+recipe.link1 = dinners[1]
+# directly from lab 4
+recipe.item1 = read_html(recipe.link1)
+ingredients.section1 = html_element(recipe.item1, "#ingredients")
+ingredients1 = html_elements(ingredients.section1, "li")
+instructions.section1 = html_element(recipe.item1, "#instructions")
+instructions1 = html_elements(instructions.section1, "li")
+image.element1 = html_element(recipe.item1,".figure-img")
+image.url1=paste("website/",html_attr(image.element1, "src"), sep="")
+recipe.title1 <- recipe.item1 |> html_element("h1") |> html_text()
+
+# DINNER 2
+
+recipe.link2 = dinners[2]
+# directly from lab 4
+recipe.item2 = read_html(recipe.link2)
+ingredients.section2 = html_element(recipe.item2, "#ingredients")
+ingredients2 = html_elements(ingredients.section2, "li")
+instructions.section2 = html_element(recipe.item2, "#instructions")
+instructions2 = html_elements(instructions.section2, "li")
+image.element2 = html_element(recipe.item2,".figure-img")
+image.url2=paste("website/",html_attr(image.element2, "src"), sep="")
+recipe.title2 <- recipe.item2 |> html_element("h1") |> html_text()
+
+# DINNER 3
+
+recipe.link3 = dinners[3]
+# directly from lab 4
+recipe.item3 = read_html(recipe.link3)
+ingredients.section3 = html_element(recipe.item3, "#ingredients")
+ingredients3 = html_elements(ingredients.section3, "li")
+instructions.section3 = html_element(recipe.item3, "#instructions")
+instructions3 = html_elements(instructions.section3, "li")
+image.element3 = html_element(recipe.item3,".figure-img")
+image.url3=paste("website/",html_attr(image.element3, "src"), sep="")
+recipe.title3 <- recipe.item3 |> html_element("h1") |> html_text()
+
+# BREAKFAST
+
+recipe.link4 = breakfast[1]
+# directly from lab 4
+recipe.item4 = read_html(recipe.link4)
+ingredients.section4 = html_element(recipe.item4, "#ingredients")
+ingredients4 = html_elements(ingredients.section4, "li")
+instructions.section4 = html_element(recipe.item4, "#instructions")
+instructions4 = html_elements(instructions.section4, "li")
+image.element4 = html_element(recipe.item4,".figure-img")
+image.url4=paste("website/",html_attr(image.element4, "src"), sep="")
+recipe.title4 <- recipe.item4 |> html_element("h1") |> html_text()
+
+```
+
+# Ingredients
+
+```{r}
+#| echo: false
+#| results: 'asis'
+formatted_list1 <- paste("-", html_text(ingredients1))
+cat(formatted_list1, sep = "\n")
+formatted_list2 <- paste("-", html_text(ingredients2))
+cat(formatted_list2, sep = "\n")
+formatted_list3 <- paste("-", html_text(ingredients3))
+cat(formatted_list3, sep = "\n")
+formatted_list4 <- paste("-", html_text(ingredients4))
+cat(formatted_list4, sep = "\n")
+```
+
+\newpage
+
+# Recipe One
+```{r}
+#| echo: false
+#| results: 'asis'
+# width="50%" shrinks the image for printing
+recipe.title1 <- recipe.item1 |> html_element("h1") |> html_text()
+cat(paste('![', recipe.title1, '](', image.url1, "){width=50%}", sep="")) 
+```
+
+## Ingredients
+
+```{r}
+#| echo: false
+#| results: 'asis'
+formatted_list1 <- paste("-", html_text(ingredients1))
+cat(formatted_list1, sep = "\n")
+```
+
+## Instructions
+
+```{r}
+#| echo: false
+#| results: 'asis'
+formatted_list1 <- paste("1.", html_text(instructions1))
+cat(formatted_list1, sep = "\n")
+```
+
+
+
+# Recipe Two
+
+
+```{r}
+#| echo: false
+#| results: 'asis'
+# width="50%" shrinks the image for printing
+recipe.title2 <- recipe.item2 |> html_element("h1") |> html_text()
+cat(paste('![', recipe.title2, '](', image.url2, "){width=50%}", sep="")) 
+```
+
+## Ingredients
+
+```{r}
+#| echo: false
+#| results: 'asis'
+formatted_list2 <- paste("-", html_text(ingredients2))
+cat(formatted_list2, sep = "\n")
+```
+
+## Instructions
+
+```{r}
+#| echo: false
+#| results: 'asis'
+formatted_list2 <- paste("1.", html_text(instructions2))
+cat(formatted_list2, sep = "\n")
+```
+
+\newpage
+
+# Recipe Three
+
+```{r}
+#| echo: false
+#| results: 'asis'
+# width="50%" shrinks the image for printing
+recipe.title3 <- recipe.item3 |> html_element("h1") |> html_text()
+cat(paste('![', recipe.title3, '](', image.url3, "){width=50%}", sep="")) 
+```
+
+## Ingredients
+
+```{r}
+#| echo: false
+#| results: 'asis'
+formatted_list3 <- paste("-", html_text(ingredients3))
+cat(formatted_list3, sep = "\n")
+```
+
+## Instructions
+
+```{r}
+#| echo: false
+#| results: 'asis'
+formatted_list3 <- paste("1.", html_text(instructions3))
+cat(formatted_list3, sep = "\n")
+```
+
+
+
+# Breakfast Recipe
+
+```{r}
+#| echo: false
+#| results: 'asis'
+# width="50%" shrinks the image for printing
+recipe.title4 <- recipe.item4 |> html_element("h1") |> html_text()
+cat(paste('![', recipe.title4, '](', image.url4, "){width=50%}", sep="")) 
+```
+
+## Ingredients
+
+```{r}
+#| echo: false
+#| results: 'asis'
+formatted_list4 <- paste("-", html_text(ingredients4))
+cat(formatted_list4, sep = "\n")
+```
+
+## Instructions
+
+```{r}
+#| echo: false
+#| results: 'asis'
+formatted_list4 <- paste("1.", html_text(instructions4))
+cat(formatted_list4, sep = "\n")
+```
+

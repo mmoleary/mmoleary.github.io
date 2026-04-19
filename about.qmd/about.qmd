@@ -1,0 +1,24 @@
+---
+title: "Maggie O'Leary"
+
+about:
+  id: hero-heading
+  template: broadside
+  image: about.jpg
+  image-shape: rectangle
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com
+---
+
+:::{#hero-heading}
+
+
+Maggie O'Leary is a English and mathematics major at Colgate University. In her free time, she enjoys reading mystery novels, playing the violin, and listening to music.
+
+## Education
+
+Colgate University | Hamilton, NY
+ | Aug 2025 - May 2029
+
