@@ -1,7 +1,7 @@
 ---
-title: "Maggie O'Leary"
+title: "Maggie O'Leary's Portfolio"
 ---
 
-This is a Quarto website.
+This is a Quarto website for my computational statistics work at Colgate Univeristy.
 
 To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
