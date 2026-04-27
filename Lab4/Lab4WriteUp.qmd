@@ -110,7 +110,7 @@ head(df) #shows first few data in the dataset
 Ask for the column `x1`.
 
 ```{r}
-df[,1] 
+df$x1 
 ```
 
 ## Part d
@@ -124,7 +124,7 @@ df[5,]
 Ask for the the value of `x1` in the fifth row of the data frame.
 
 ```{r}
-df[5,1]
+df$x1[5]
 ```
 
 ## Part f
@@ -181,7 +181,7 @@ evaluate.row = function(i){
                        if(i<4){
                         "low"
                        }
-                       else if(i>=4 & i<=7){
+                       else if(i=4 & i<=7){
                         "mid"
                        }
                        else{ 
@@ -212,7 +212,7 @@ calculated.score = c((2*x1)+x2-x3)
 calculated.score
 ```
 
-In part j, I don't think I could have used vectorization because to have three outcomes, I would need to use block notation and that is non-vectorized.
+In part j, I could have used vectorization with nested if else statements.
 
 # Complete Tasks for One Recipe
 
@@ -337,6 +337,10 @@ When you render this document, no code should be visible. Instead, you should se
 
 ## Why a fake website?
 Read [https://www.scrapingbee.com/blog/is-web-scraping-legal/](Is Web Sraping Legal?). Originally, I conceived doing this with recipes from Purple Carrot (my favorite subscription service). Being a large company, their terms of service are *very* long and precluded us from copying their recipes. We also checked a few smaller recipe websites we like and even they had terms of service that restricted automated collection of data.
+
+**Solution**
+
+We had to use a fake website due to the ambigious legality associated with scraping. While the act itself is not illegal, there are many factors that can strip scraping of its legality. A major component is that many of these recipe websites incorporate some level of paywall, copyright protections, and lengthy terms of service.
 
 ## Conditionals
 Did you use conditional statements in your code? If yes, how. If not, are there places you could have used them but did something else?

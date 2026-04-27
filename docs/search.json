@@ -134,7 +134,7 @@
     "href": "Lab4/Lab4WriteUp.html#part-c",
     "title": "Lab Four – Programming in R",
     "section": "1.4 Part c",
-    "text": "1.4 Part c\nAsk for the column x1.\n\n\n\nCode\ndf[,1] \n\n\n [1] 8 3 5 3 2 3 1 2 6 2",
+    "text": "1.4 Part c\nAsk for the column x1.\n\n\n\nCode\ndf$x1 \n\n\n [1] 8 3 5 3 2 3 1 2 6 2",
     "crumbs": [
       "Lab Four -- Programming in R"
     ]
@@ -154,7 +154,7 @@
     "href": "Lab4/Lab4WriteUp.html#part-e",
     "title": "Lab Four – Programming in R",
     "section": "1.6 Part e",
-    "text": "1.6 Part e\nAsk for the the value of x1 in the fifth row of the data frame.\n\n\n\nCode\ndf[5,1]\n\n\n[1] 2",
+    "text": "1.6 Part e\nAsk for the the value of x1 in the fifth row of the data frame.\n\n\n\nCode\ndf$x1[5]\n\n\n[1] 2",
     "crumbs": [
       "Lab Four -- Programming in R"
     ]
@@ -372,9 +372,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Maggie O’Leary",
+    "title": "Maggie O’Leary’s Portfolio",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.",
+    "text": "This is a Quarto website for my computational statistics work at Colgate Univeristy.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.",
     "crumbs": [
       "Home"
     ]
@@ -684,7 +684,7 @@
     "href": "Lab2/Lab2WriteUp.html#part-c",
     "title": "Lab Two – Basic Tasks in R",
     "section": "1.3 Part C",
-    "text": "1.3 Part C\nHow can you ask for help about the esquisse package for R? Report the code below, ensuring to set the eval option to false, using “#| eval: false”, so that the help document isn’t loaded every time you compile your Quarto document.\nSolution\n\n\nhelp(\"esquisse\") # typing this into the console directs you to a description of the package, the authors, two useful links, a place to report bugs, and examples.",
+    "text": "1.3 Part C\nHow can you ask for help about the esquisse package for R? Report the code below, ensuring to set the eval option to false, using “#| eval: false”, so that the help document isn’t loaded every time you compile your Quarto document.\nSolution\n\n\nhelp(\"esquisse\")  \n\n\nTyping this into the console directs you to a description of the package, the authors, two useful links, a place to report bugs, and examples.",
     "crumbs": [
       "Lab Two -- Basic Tasks in R"
     ]
@@ -694,7 +694,7 @@
     "href": "Lab2/Lab2WriteUp.html#part-d",
     "title": "Lab Two – Basic Tasks in R",
     "section": "1.4 Part D",
-    "text": "1.4 Part D\nIs a demo or vignette available for the esquisse package for R? Report the code below, ensuring to set the eval option to false, using “#| eval: false”, so that the you don’t get errors when you compile your Quarto document.\nSolution There is no demo or vignette.\n\n\ndemo(\"esquisse\") \nvignette(\"esquisse\") #If this had a demo/vignette it would have directed me there, but it has neither.",
+    "text": "1.4 Part D\nIs a demo or vignette available for the esquisse package for R? Report the code below, ensuring to set the eval option to false, using “#| eval: false”, so that the you don’t get errors when you compile your Quarto document.\nSolution There is no demo or vignette.\n\n\ndemo(package = \"esquisse\") #no demo\nvignette(package = \"esquisse\") #Two vignettes available",
     "crumbs": [
       "Lab Two -- Basic Tasks in R"
     ]
@@ -734,7 +734,7 @@
     "href": "Lab2/Lab2WriteUp.html#part-b-1",
     "title": "Lab Two – Basic Tasks in R",
     "section": "2.2 Part b",
-    "text": "2.2 Part b\nTriangular Numbers are the cumulative sums of natural numbers: \\[F_n = \\frac{n(n+1)}{2}.\\]\nCreate a vector of the first 10 Triangular Numbers.\nSolution I used a manual formula because again, there were no repeating terms and the difference between terms increased by one with every new term.\n\n\n(Triangular.Numbers = c(1, 3, 6, 10, 15, 21, 28, 36, 45, 55)) # this formula is difficult to create as a sequential vector because terms are based on their order within the sequence, not some change as they increase. There are also no repeats to be expressed as a repeating vector.\n\n [1]  1  3  6 10 15 21 28 36 45 55",
+    "text": "2.2 Part b\nTriangular Numbers are the cumulative sums of natural numbers: \\[F_n = \\frac{n(n+1)}{2}.\\]\nCreate a vector of the first 10 Triangular Numbers.\nSolution I used a manual formula because again, there were no repeating terms and the difference between terms increased by one with every new term.\n\n\nn = 1:10\nTriangular.Numbers = (n*(n+1)/2)\nTriangular.Numbers\n\n [1]  1  3  6 10 15 21 28 36 45 55",
     "crumbs": [
       "Lab Two -- Basic Tasks in R"
     ]
@@ -894,7 +894,7 @@
     "href": "Lab3/Lab3WriteUp.html#part-a-2",
     "title": "Lab Three – Matrices and Data Frames in R",
     "section": "3.1 Part a",
-    "text": "3.1 Part a\nUse the following to generate a new shape. Compare the shape and its area to your answer in Question 1. \\[\\mathbf{M}_v = \\begin{bmatrix} 1 & k=0.5 \\\\ 0 & 1 \\end{bmatrix} ~~~~~ \\textrm{and} ~~~~~\n  \\mathbf{A}   = \\begin{bmatrix} 1 & -7 \\\\ 5 & 9 \\end{bmatrix}\\]\nSolution\n\n\n\nCode\nMv = matrix(data= c(1, k=0.5, 0, 1), nrow=2, ncol = 2, byrow = TRUE)\nA = matrix(data = c(1, -7, 5, 9), nrow = 2, ncol = 2, byrow = TRUE) \nT = A%*%Mv\nT\n\n\n     [,1] [,2]\n[1,]    1 -6.5\n[2,]    5 11.5\n\n\nCode\ndet(A) #For area of the parallelogram\n\n\n[1] 44\n\n\nCode\nbasis.vector.1 = c(1,5) \nbasis.vector.2 = c(-6.5,11.5) \n\np0 = c(0,0)\np1 = basis.vector.1\np2 = basis.vector.1+basis.vector.2\np3 = basis.vector.2\nggplot() +\n  geom_segment(aes(x = p0[1], y = p0[2], xend = p1[1], yend = p1[2])) +\n  geom_segment(aes(x = p1[1], y = p1[2], xend = p2[1], yend = p2[2])) +\n  geom_segment(aes(x = p2[1], y = p2[2], xend = p3[1], yend = p3[2])) +\n  geom_segment(aes(x = p3[1], y = p3[2], xend = p0[1], yend = p0[2])) +\n  theme_bw() +\n  xlim(-15, 15) +\n  ylim(-5, 25) +\n  labs(x = \"x\", y = \"y\")\n\n\n\n\n\nFigure 4: Parallelogram 2.\n\n\n\n\n\n\n\n\n Figure 4 has different side lengths and angles than Figure 2 (giving it a stretched appearance), however their areas are the same, as shown by them having the same determinants of their respective matrix A.",
+    "text": "3.1 Part a\nUse the following to generate a new shape. Compare the shape and its area to your answer in Question 1. \\[\\mathbf{M}_v = \\begin{bmatrix} 1 & k=0.5 \\\\ 0 & 1 \\end{bmatrix} ~~~~~ \\textrm{and} ~~~~~\n  \\mathbf{A}   = \\begin{bmatrix} 1 & -7 \\\\ 5 & 9 \\end{bmatrix}\\]\nSolution\n\n\n\nCode\nMv = matrix(data= c(1, k=0.5, 0, 1), nrow=2, ncol = 2, byrow = TRUE)\nA = matrix(data = c(1, -7, 5, 9), nrow = 2, ncol = 2, byrow = TRUE) \nT = A%*%Mv\nT\n\n\n     [,1] [,2]\n[1,]    1 -6.5\n[2,]    5 11.5\n\n\nCode\ndet(T) #For area of the parallelogram\n\n\n[1] 44\n\n\nCode\nbasis.vector.1 = c(1,5) \nbasis.vector.2 = c(-6.5,11.5) \n\np0 = c(0,0)\np1 = basis.vector.1\np2 = basis.vector.1+basis.vector.2\np3 = basis.vector.2\nggplot() +\n  geom_segment(aes(x = p0[1], y = p0[2], xend = p1[1], yend = p1[2])) +\n  geom_segment(aes(x = p1[1], y = p1[2], xend = p2[1], yend = p2[2])) +\n  geom_segment(aes(x = p2[1], y = p2[2], xend = p3[1], yend = p3[2])) +\n  geom_segment(aes(x = p3[1], y = p3[2], xend = p0[1], yend = p0[2])) +\n  theme_bw() +\n  xlim(-15, 15) +\n  ylim(-5, 25) +\n  labs(x = \"x\", y = \"y\")\n\n\n\n\n\nFigure 4: Parallelogram 2.\n\n\n\n\n\n\n\n\n Figure 4 has different side lengths and angles than Figure 2 (giving it a stretched appearance), however their areas are the same, as shown by them having the same determinants of their respective matrix A.",
     "crumbs": [
       "Lab Three -- Matrices and Data Frames in R"
     ]
@@ -904,7 +904,7 @@
     "href": "Lab3/Lab3WriteUp.html#part-b-2",
     "title": "Lab Three – Matrices and Data Frames in R",
     "section": "3.2 Part b",
-    "text": "3.2 Part b\nUse the following to generate a new shape. Compare the shape and its area to your answer in Questions 1 and the vertical shear transform in part (a). \\[ \\mathbf{M}_h = \\begin{bmatrix} 1 & 0 \\\\ k=0.5 & 1 \\end{bmatrix}~~~~~ \\textrm{and} ~~~~~\n  \\mathbf{A}   = \\begin{bmatrix} 1 & -7 \\\\ 5 & 9 \\end{bmatrix}\\]\nSolution\n\n\n\nCode\nMh = matrix(data= c(1, 0, k=0.5, 1), nrow=2, ncol = 2, byrow = TRUE)\nA = matrix(data = c(1, -7, 5, 9), nrow = 2, ncol = 2, byrow = TRUE) \nT = A%*%Mh\nT\n\n\n     [,1] [,2]\n[1,] -2.5   -7\n[2,]  9.5    9\n\n\nCode\ndet(A) #For area of the parallelogram\n\n\n[1] 44\n\n\nCode\nbasis.vector.1 = c(-2.5,9.5) \nbasis.vector.2 = c(-7,9) \np0 = c(0,0)\np1 = basis.vector.1\np2 = basis.vector.1+basis.vector.2\np3 = basis.vector.2\n\nggplot() +\n  geom_segment(aes(x = p0[1], y = p0[2], xend = p1[1], yend = p1[2])) +\n  geom_segment(aes(x = p1[1], y = p1[2], xend = p2[1], yend = p2[2])) +\n  geom_segment(aes(x = p2[1], y = p2[2], xend = p3[1], yend = p3[2])) +\n  geom_segment(aes(x = p3[1], y = p3[2], xend = p0[1], yend = p0[2])) +\n  theme_bw() +\n  xlim(-15, 15) +\n  ylim(-5, 25) +\n  labs(x = \"x\", y = \"y\")\n\n\n\n\n\nFigure 5: Parallelogram 3\n\n\n\n\n\n\n\n\n\nCompared to Figure 4, Figure 5 is significantly stretched and both its acute and obtuse angles are more extreme. But because it has the same matrix A, it has the same area as the past parallelograms.",
+    "text": "3.2 Part b\nUse the following to generate a new shape. Compare the shape and its area to your answer in Questions 1 and the vertical shear transform in part (a). \\[ \\mathbf{M}_h = \\begin{bmatrix} 1 & 0 \\\\ k=0.5 & 1 \\end{bmatrix}~~~~~ \\textrm{and} ~~~~~\n  \\mathbf{A}   = \\begin{bmatrix} 1 & -7 \\\\ 5 & 9 \\end{bmatrix}\\]\nSolution\n\n\n\nCode\nMh = matrix(data= c(1, 0, k=0.5, 1), nrow=2, ncol = 2, byrow = TRUE)\nA = matrix(data = c(1, -7, 5, 9), nrow = 2, ncol = 2, byrow = TRUE) \nT = A%*%Mh\nT\n\n\n     [,1] [,2]\n[1,] -2.5   -7\n[2,]  9.5    9\n\n\nCode\ndet(T) #For area of the parallelogram\n\n\n[1] 44\n\n\nCode\nbasis.vector.1 = c(-2.5,9.5) \nbasis.vector.2 = c(-7,9) \np0 = c(0,0)\np1 = basis.vector.1\np2 = basis.vector.1+basis.vector.2\np3 = basis.vector.2\n\nggplot() +\n  geom_segment(aes(x = p0[1], y = p0[2], xend = p1[1], yend = p1[2])) +\n  geom_segment(aes(x = p1[1], y = p1[2], xend = p2[1], yend = p2[2])) +\n  geom_segment(aes(x = p2[1], y = p2[2], xend = p3[1], yend = p3[2])) +\n  geom_segment(aes(x = p3[1], y = p3[2], xend = p0[1], yend = p0[2])) +\n  theme_bw() +\n  xlim(-15, 15) +\n  ylim(-5, 25) +\n  labs(x = \"x\", y = \"y\")\n\n\n\n\n\nFigure 5: Parallelogram 3\n\n\n\n\n\n\n\n\n\nCompared to Figure 4, Figure 5 is significantly stretched and both its acute and obtuse angles are more extreme. But because it has the same matrix A, it has the same area as the past parallelograms.",
     "crumbs": [
       "Lab Three -- Matrices and Data Frames in R"
     ]
@@ -914,7 +914,7 @@
     "href": "Lab3/Lab3WriteUp.html#part-c-2",
     "title": "Lab Three – Matrices and Data Frames in R",
     "section": "3.3 Part c",
-    "text": "3.3 Part c\nCan we shear vertically and horizontally at the same time? Use the following to generate a new shape. Compare the shape and its area to your answers in parts (a) and (b). \\[\\mathbf{M}_{vh} = \\begin{bmatrix} 1 & k=0.5 \\\\ k=0.5 & 1 \\end{bmatrix} ~~~~~ \\textrm{and} ~~~~~\n  \\mathbf{A}   = \\begin{bmatrix} 1 & -7 \\\\ 5 & 9 \\end{bmatrix}\\]\nSolution\n\n\n\nCode\nMvh = matrix(data= c(1, k=0.5, k=0.5, 1), nrow=2, ncol = 2, byrow = TRUE)\nA = matrix(data = c(1, -7, 5, 9), nrow = 2, ncol = 2, byrow = TRUE) \nT = A%*%Mvh\nT\n\n\n     [,1] [,2]\n[1,] -2.5 -6.5\n[2,]  9.5 11.5\n\n\nCode\ndet(A) #For area of the parallelogram\n\n\n[1] 44\n\n\nCode\nbasis.vector.1 = c(-2.5,9.5) \nbasis.vector.2 = c(-6.5,11.5) \np0 = c(0,0)\np1 = basis.vector.1\np2 = basis.vector.1+basis.vector.2\np3 = basis.vector.2\nggplot() +\n  geom_segment(aes(x = p0[1], y = p0[2], xend = p1[1], yend = p1[2])) +\n  geom_segment(aes(x = p1[1], y = p1[2], xend = p2[1], yend = p2[2])) +\n  geom_segment(aes(x = p2[1], y = p2[2], xend = p3[1], yend = p3[2])) +\n  geom_segment(aes(x = p3[1], y = p3[2], xend = p0[1], yend = p0[2])) +\n  theme_bw() +\n  xlim(-15, 15) +\n  ylim(-5, 25) +\n  labs(x = \"x\", y = \"y\")\n\n\n\n\n\nFigure 6: Parallelogram 4\n\n\n\n\n\n\n\n\n\nSimilar to the differnce between Figure 4 and Figure 5, Figure 6 is even further stretched compared to the shapes in part a and b. But because it has the same matrix A, it has the same area as the past parallelograms.",
+    "text": "3.3 Part c\nCan we shear vertically and horizontally at the same time? Use the following to generate a new shape. Compare the shape and its area to your answers in parts (a) and (b). \\[\\mathbf{M}_{vh} = \\begin{bmatrix} 1 & k=0.5 \\\\ k=0.5 & 1 \\end{bmatrix} ~~~~~ \\textrm{and} ~~~~~\n  \\mathbf{A}   = \\begin{bmatrix} 1 & -7 \\\\ 5 & 9 \\end{bmatrix}\\]\nSolution\n\n\n\nCode\nMvh = matrix(data= c(1, k=0.5, k=0.5, 1), nrow=2, ncol = 2, byrow = TRUE)\nA = matrix(data = c(1, -7, 5, 9), nrow = 2, ncol = 2, byrow = TRUE) \nT = A%*%Mvh\nT\n\n\n     [,1] [,2]\n[1,] -2.5 -6.5\n[2,]  9.5 11.5\n\n\nCode\ndet(T) #For area of the parallelogram\n\n\n[1] 33\n\n\nCode\nbasis.vector.1 = c(-2.5,9.5) \nbasis.vector.2 = c(-6.5,11.5) \np0 = c(0,0)\np1 = basis.vector.1\np2 = basis.vector.1+basis.vector.2\np3 = basis.vector.2\nggplot() +\n  geom_segment(aes(x = p0[1], y = p0[2], xend = p1[1], yend = p1[2])) +\n  geom_segment(aes(x = p1[1], y = p1[2], xend = p2[1], yend = p2[2])) +\n  geom_segment(aes(x = p2[1], y = p2[2], xend = p3[1], yend = p3[2])) +\n  geom_segment(aes(x = p3[1], y = p3[2], xend = p0[1], yend = p0[2])) +\n  theme_bw() +\n  xlim(-15, 15) +\n  ylim(-5, 25) +\n  labs(x = \"x\", y = \"y\")\n\n\n\n\n\nFigure 6: Parallelogram 4\n\n\n\n\n\n\n\n\n\nSimilar to the differnce between Figure 4 and Figure 5, Figure 6 is even further stretched compared to the shapes in part a and b. But because it has the same matrix A, it has the same area as the past parallelograms.",
     "crumbs": [
       "Lab Three -- Matrices and Data Frames in R"
     ]

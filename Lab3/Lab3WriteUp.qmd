@@ -332,7 +332,7 @@ Mv = matrix(data= c(1, k=0.5, 0, 1), nrow=2, ncol = 2, byrow = TRUE)
 A = matrix(data = c(1, -7, 5, 9), nrow = 2, ncol = 2, byrow = TRUE) 
 T = A%*%Mv
 T
-det(A) #For area of the parallelogram
+det(T) #For area of the parallelogram
 basis.vector.1 = c(1,5) 
 basis.vector.2 = c(-6.5,11.5) 
 
@@ -372,7 +372,7 @@ Mh = matrix(data= c(1, 0, k=0.5, 1), nrow=2, ncol = 2, byrow = TRUE)
 A = matrix(data = c(1, -7, 5, 9), nrow = 2, ncol = 2, byrow = TRUE) 
 T = A%*%Mh
 T
-det(A) #For area of the parallelogram
+det(T) #For area of the parallelogram
 
 basis.vector.1 = c(-2.5,9.5) 
 basis.vector.2 = c(-7,9) 
@@ -413,7 +413,7 @@ Mvh = matrix(data= c(1, k=0.5, k=0.5, 1), nrow=2, ncol = 2, byrow = TRUE)
 A = matrix(data = c(1, -7, 5, 9), nrow = 2, ncol = 2, byrow = TRUE) 
 T = A%*%Mvh
 T
-det(A) #For area of the parallelogram
+det(T) #For area of the parallelogram
 
 basis.vector.1 = c(-2.5,9.5) 
 basis.vector.2 = c(-6.5,11.5) 

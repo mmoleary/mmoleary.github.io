@@ -166,7 +166,7 @@ Clean up the data entry. Replace the shorthand the researchers used with the nea
 
 ```{r}
 dat.kitsberg.cleaned=dat.kitsberg.cleaned |> 
-  mutate(CellType = if_else(CellType == "mono", "monocytes", "macrophages")) |>
+  mutate(CellType = if_else(CellType == "mono", "Monocytes", "Macrophages")) |>
   mutate(SampleType = if_else(SampleType == "primary", "Healthy Donor", "THP-1"))|> 
   mutate(Treatment = if_else(Treatment == "uninfected", "Uninfected", "12 Hours Post-Infection"))
 #updates the data set with more precise names with mutate
@@ -182,15 +182,18 @@ In an `R` code block, combine your answers into one code block that completes th
 
 ```{r}
 dat.kitsberg <- read.csv("Fig.3B-Table 1.csv")
-dat.kitsberg.cleaned = dat.kitsberg |> separate("sample", 
-                                                c("SampleType", "CellType", "Treatment"))|>
-                                       filter(Treatment == "12hpi")|>
-                                       mutate(CellType =
-                                       if_else(CellType == "MDM", "mac",CellType))|>
-                                       filter(CellType %in% c("mac", "mono"))|>
-  mutate(CellType = if_else(CellType == "mono", "monocytes", "macrophages")) |>
-  mutate(SampleType = if_else(SampleType == "primary", "Healthy Donor", "THP-1"))|> 
-  mutate(Treatment = if_else(Treatment == "uninfected", "Uninfected", "12 Hours Post-Infection"))
+dat.kitsberg.cleaned = dat.kitsberg |> 
+  separate("sample",c("SampleType", "CellType", "Treatment"))|>
+  filter(Treatment == "12hpi")|>
+  mutate(CellType =
+    if_else(CellType == "MDM", "mac",CellType))|>
+  filter(CellType %in% c("mac", "mono"))|>
+  mutate(CellType = 
+    if_else(CellType == "mono", "Monocytes", "Macrophages")) |>
+  mutate(SampleType = 
+    if_else(SampleType == "primary", "Healthy Donor", "THP-1"))|> 
+  mutate(Treatment = 
+    if_else(Treatment == "uninfected", "Uninfected", "12 Hours Post-Infection"))
 ```
 
 ## Data Summaries
@@ -212,18 +215,20 @@ Recreate Figure 3b as depicted in the paper (see [https://www.nature.com/article
 #| size: scriptsize
 
 ggplot(dat.kitsberg.cleaned) + # Specify Data
-geom_violin(aes(x = CellType, # Specify no grouping
-                y =  viruses.within.nucleus), # Specify y-axis
-                fill = "lightgrey", alpha=0.5) + # A transparent light grey
-geom_boxplot(aes(x = CellType, # Specify no grouping
-                 y =  viruses.within.nucleus), # Specify y-axis
-                 width = 0.1)+
-theme_bw() + # A cleaner theme
-labs(x = "", # Specify axis labels
-     y = "HCMV Genomes in the Nucleus") +
-ggtitle("HCMV Genomes in the Nucleus in Kitsberg Data") + # Plot title
-facet_wrap(~ SampleType, , ncol = 2)
+  geom_violin(aes(x = CellType, # Specify no grouping
+                  y = viruses.within.nucleus), # Specify y-axis
+                  fill = "lightgrey", alpha=0.5) + # A transparent light grey
+  geom_boxplot(aes(x = CellType, # Specify no grouping
+                   y = viruses.within.nucleus), # Specify y-axis
+                   width = 0.1)+
+ theme_bw() + # A cleaner theme
+ labs(x = "", # Specify axis labels
+      y = "HCMV Genomes in the Nucleus") +
+ ggtitle("HCMV Genomes in the Nucleus in Kitsberg Data") + # Plot title
+ facet_wrap(~ SampleType, , ncol = 2)
 ```
+
+This graphical summary demonstrates that in both healthy donors and those with THP-1 there are typically more HCMV genomes in the nucleaus of macrophages. In both the healthy donors and THP-1 donors, there were few instances of the HCMV genomes in the nucleus of the monocytes, both only had a few outliers. However, this graph does not properly represent the data as it does not show the count of the HCMV Genomes in the nucleus of the different cells of different types of patients. A bar plot would be helpful.
 
 ### Part B
 Compute a table containing relevant numerical summaries for Figure 3b.
@@ -235,7 +240,7 @@ Compute a table containing relevant numerical summaries for Figure 3b.
 ```{r}
 #| size: scriptsize
 dat.kitsberg.cleaned.summary <- dat.kitsberg.cleaned |>
-  group_by(SampleType) |> #seperates data by sample category
+  group_by(SampleType, CellType) |> #seperates data by sample category
   summarize( #calculates data for a table with the following measures
     n = n(),
     Mean = mean(viruses.within.nucleus, na.rm = T),
@@ -255,6 +260,8 @@ dat.kitsberg.cleaned.summary <- dat.kitsberg.cleaned |>
 dat.kitsberg.cleaned.summary |>
   knitr::kable(digits = 3) #digits specify decimal in table values
 ```
+
+This table demonstrates that in patients with THP-1, the average amount of viruses within the nucleus of cells is higher than healthy donors in the monocytes and lower in macrophages. It is important to note that all of these data distributions are right skewed and are leptokurtic, demonstrating that the prescence of viruses within any cells are fairly uncommon, which is further supported by the median of 0 (a more reliable measure of center than the mean with the amount of skew). 
 
 # Ship Valuation
 
@@ -298,8 +305,10 @@ The authors recorded the country that each Supramax or Ultramax ship was built i
 **Solution**
 
 ```{r}
-dat.bal.cleaned = dat.bal.cleaned |> mutate(
-  OriginCountry = case_when(
+dat.bal.cleaned = dat.bal.cleaned |> 
+  mutate(OriginCountry = 
+  #create a new column, "OriginCountry" with mutate
+    case_when(
       Japan == 1 ~ "Japan",
       China..People.s.Republic.Of == 1 ~ "China",
       Philippines == 1 ~ "Philippines",
@@ -307,7 +316,6 @@ dat.bal.cleaned = dat.bal.cleaned |> mutate(
       Others.Country.Build == 1 ~ "Other Country"
       )
     )
-    #create a new column, "OriginCountry" with mutate
     #when a given country column is 1, make that country's name the value in the new column
 ```
 
@@ -419,6 +427,7 @@ In an `R` code block, combine your answers into one code block that completes th
 dat.bal.cleaned = dat.bal |> mutate(Price = (10^SPLog)/1000000)|> 
   drop_na() |> #gets rid of empty cells
   mutate(OriginCountry = 
+   # creates new column 'Origin Country' containing categories:
    case_when(
       Japan == 1 ~ "Japan",
       China..People.s.Republic.Of == 1 ~ "China",
@@ -428,6 +437,7 @@ dat.bal.cleaned = dat.bal |> mutate(Price = (10^SPLog)/1000000)|>
       )
     ) |>
   mutate(Manufacturer = 
+   # creates new column 'Manufacturer' containing categories:
    case_when(
       Caterpillar == 1 ~ "Caterpillar",
       MAN.B.W == 1 ~ "MAN-B&W",
@@ -436,6 +446,7 @@ dat.bal.cleaned = dat.bal |> mutate(Price = (10^SPLog)/1000000)|>
       )
     )|>
   mutate(PI.club = 
+   # creates new column 'PI.club' containing categories:
    case_when(
       Japan.P.I.Club == 1 ~ "Japan P&I Club",
       Gard == 1 ~ "Gard",
@@ -451,6 +462,7 @@ dat.bal.cleaned = dat.bal |> mutate(Price = (10^SPLog)/1000000)|>
       )
     ) |>
   mutate(Class = 
+   # creates new column 'Class' containing categories:
    case_when(
       Nippon.Kaiji.Kyokai..IACS. == 1 ~ "Nippon Kaiji Kyokai (IACS)",
       Lloyd.s.Register == 1 ~ "Lloyd's Register",
@@ -463,6 +475,7 @@ dat.bal.cleaned = dat.bal |> mutate(Price = (10^SPLog)/1000000)|>
       )
     )|> 
   mutate(FlagState = 
+   # creates new column 'FlagState' containing categories:
    case_when(
       Panama == 1 ~ "Panama",
       Marshall.Islands == 1 ~ "Marshall Islands",
@@ -474,7 +487,6 @@ dat.bal.cleaned = dat.bal |> mutate(Price = (10^SPLog)/1000000)|>
       With.two.flags == 1 ~ "Two Flags"
       )
     )
-    #See Part C for logic behind this
 ```
 
 ## Data Summaries
@@ -518,11 +530,10 @@ geom_boxplot(aes(x = OriginCountry, # Specify no grouping
                  width = 0.1)+
 theme_bw() + # A cleaner theme
 labs(x = "Origin Country", # Specify axis labels
-     y = "Price (Millions of USD)") +
-ggtitle("Ship Prices by Origin Country")
+     y = "Price (Millions of USD)") 
 ```
 
-@fig-OriginCountry demonstrates that most ship prices are skewed right with many outliers. Generally, most countries' medians are between 10 and 15 million USD. Most of these countries, with maybe the exception of Japan, have interquartile ranges of about 10 million USD. From this graph, there doesn't seem to be significant differences in ship prices due to origin country, however, China and Japan have the greatest amount of outliers with multiple ships costing more than $50 million.
+@fig-OriginCountry demonstrates that most ship prices are skewed right with many outliers. Generally, most countries' medians are between 10 and 15 million USD. Most of these countries, with maybe the exception of Japan, have interquartile ranges of about 10 million USD. From this graph, there doesn't seem to be major differences in ship prices due to origin country, however, China and Japan have the greatest amount of outliers with multiple ships costing more than $50 million.
 
 ```{r}
 #| size: scriptsize
@@ -549,7 +560,7 @@ OriginCountry.summary |>
   knitr::kable(digits = 3)
 ```
 
-@tbl-OriginCountry provides some greater insight as to why China and Japan may have many more outliers: they produce significantly more ships. The massive jump in number of ships produced between the Phillippines and China could explain the massive jump in number of outliers. This greater number of outliers can also explain why the means of China and Japan are closer to $17 million while the others are below $15 million (with the exception of the Philippines which just has one major outlier pulling the mean). Because the skewness of all of these distributions are fairly high, I believe the median and IQR are more accurate measures of this data. This distribution is also leptokurtic (the excess kurtosis of all countries is positive), further supporting the need to use median and interquartile range. Unlike with the violin plot, it is much more clear that China, Japan, and the Philippines are typically more expensive with a medians over $14 million, while South Korea ship prices have a median of $11.5 million and other countries have a median of $9.9 million. Based on the IQR, Japan has the greatest amount of variation, as seen in the violin plot, other countries has the least variation, and China, the Philippines, and South Korea all have around the same variation with interquartile ranges between $10 and $11 Million. Therefore, ship prices could differ based on country of origin with China, Japan, and the Phillippines typically being the most expensive. However, before any majors conclusions can be drawn, it is worth noting that these ship price variations could be caused by different countries producing different types of ships.
+@tbl-OriginCountry provides some greater insight as to why China and Japan may have many more outliers: they produce significantly more ships. The massive jump in number of ships produced between the Phillippines and China could explain the massive jump in number of outliers. This greater number of outliers can also explain why the means of China and Japan are closer to $17 million while the others are below $15 million (with the exception of the Philippines which just has one major outlier pulling the mean). Because the skewness of all of these distributions are fairly high, I believe the median and IQR are more accurate measures of this data. This distribution is also leptokurtic (the excess kurtosis of all countries is positive), further supporting the need to use median and interquartile range. Unlike with the violin plot, it is much more clear that China, Japan, and the Philippines are typically more expensive with a medians over $14 million, while South Korea ship prices have a median of $11.5 million and other countries have a median of $9.9 million. Based on the IQR, Japan has the greatest amount of variation, as seen in the violin plot, other countries has the least variation, and China, the Philippines, and South Korea all have around the same variation with interquartile ranges between $10 and $11 Million. Therefore, ship prices could differ based on country of origin with China, Japan, and the Phillippines typically being the most expensive. However, before any majors conclusions can be drawn, it is worth noting that these ship price variations could be caused by different countries producing different types of ships or some other confounding variable.
 
 ### Part B
 Choose a quantitative variable. Create a plot and corresponding numerical summary to assess whether or how ship prices vary with the selected quantitative variable.  
@@ -573,8 +584,7 @@ geom_smooth(aes(x = Yas, # Specify x-axis
                 color = "black") + # Specify line color
 theme_bw() + # A cleaner theme
 labs(x = "Age in Years", # Specify axis labels
-     y = "Price (Millions of USD)") +
-ggtitle("Price based on Years") # Plot title
+     y = "Price (Millions of USD)") 
 ```
 
 In @fig-Year, the line has a very flat negative slope, showing a possible negative relationship between price and the age of the ships. There is greater variation in price within the first ten years after a ship is manufactured, which could be caused by Supramax and Ultramax being recorded as having age 1. But there is also greater variation around the 25 year mark, so there could be another factor aside from just ship type. But generally, as age increases, the price of ships decrease.
@@ -598,7 +608,7 @@ Age.summary |>
   knitr::kable(digits = 3)
 ```
 
-@tbl-PriceAgeCorrelation shows that there is a moderately negative relationship between age and price. It is likely monotonic rather than linear as the Pearson correlation is not as strong as the Spearman correlation. But this is not diffinitive as the Kendall Tau is slighlty less strong than Pearson.
+@tbl-PriceAgeCorrelation shows that there is a moderately negative relationship between age and price. It is likely monotonic rather than linear as the Pearson correlation is not as strong as the Spearman correlation. This is supported as the Kendall Tau is also shows a negative monotonic correlation
 
 # Citations
 I used the patchwork package [@patchwork] to help compose plots, the tidyverse package [@tidyverse] to help create tables and graphs, the knitr package [@knitr] for cleanly organized graphs and tables, the e1071 package [@e1071] to find excess kurtosis and skewness, all while using R [@R] as my program.
