@@ -143,6 +143,12 @@ daltbinom(x = 6, size = 11, prob = 0.5, theta = c(0.5, 1, 1.5))
 ```
 
 ```{r}
+#| label: Winning.Prob
+#| fig-width: 10
+#| fig-height: 6
+#| scale: "80%"
+#| fig-align: "center"
+
 ggdat <- tibble(theta = seq(from = 0.5, to = 1.5, length.out = 1000)) |>
 mutate(PMF = daltbinom(x = 6, size = 11, prob = 0.5, theta = theta))
 #creates a tibble based on the theta values 
@@ -162,6 +168,12 @@ PMF.plot
 Now, plot Altham's Multiplicative Binomial Distribution under the same parameters with $\theta=0.50$, $\theta=1$, and $\theta=1.5$. Use `ncol=1` in `facet_wrap()` to plot the PMFs in a single column for comparing.
 
 ```{r}
+#| label: Alt.MBD
+#| fig-width: 10
+#| fig-height: 6
+#| scale: "80%"
+#| fig-align: "center"
+
 ggdat <- ggdat <- tidyr::expand_grid(
   x = 0:11,
   theta = c(0.5, 1, 1.5)) |>
@@ -169,13 +181,15 @@ ggdat <- ggdat <- tidyr::expand_grid(
 #expand grid allows both columns based on the theta values and x values
 #important for making a facet wrap later
 
+label = as_labeller(c("0.5" = "Theta = 0.5", "1" = "Theta = 1", "1.5" = "Theta = 1.5"))
+
 PMF.plot <- ggplot(ggdat) +
   geom_linerange(data = ggdat,
   aes(x = x, ymin = 0, ymax = PMF)) +
   geom_hline(yintercept = 0) +
   scale_x_continuous("x", breaks = 0:11)+
   ylab("P(X = 6)") +
-  facet_wrap(~theta, nrow = NULL, ncol = 1) +
+  facet_wrap(~theta, nrow = NULL, ncol = 1, labeller = label) +
   theme_bw()
 
 PMF.plot
@@ -202,7 +216,7 @@ $$c = \sum_{i=0}^n {n \choose i} p^i (1-p)^{n-i} \theta^{i(n-i)}.$$
 
 ```{r}
 Expected_daltbinom= function(size, prob, theta, k){
-  x <-0:11
+  x <-0:size
   summation = x^k * daltbinom(x, size, prob, theta)
   sum(summation)
 }
@@ -216,7 +230,7 @@ Describe how you can use your answer to part a to find Method of Moments estimat
 
 **Solution**
 
-With the function above multiplied by $\frac{1}{11}$, I can equate the first three $k$ sample moments to the first three $k$ population moments, and then with systems of equations, I can choose $p$ and $\theta$ based on how closely they match the sample and population moments. 
+With the function above for $E(x^k)$, I can equate the first two $k$ sample moments to the first two $k$ population moments, and then with systems of equations, I can choose $p$ and $\theta$ based on how closely they match the sample and population moments. 
 
 ## Part c
 Write a function that computes the log-likelihood for Altham's Multiplicative Binomial Distribution, given data (`x`) and proposed parameter values $p$ (`prob`) and $\theta$ (`theta`).
@@ -237,7 +251,7 @@ Describe how you can use your answer to part c to find Maximum Likelihood estima
 
 **Solution**
 
-I can optimize the function in part C to determine where the parameters make the probability of observing my x value most likely. 
+I can use the optim() function to minimize the log likelihood in part C to determine where the parameters make the probability of observing my x value most likely. 
 
 # Lab 10
 Peter "Snakebite" Wright is a two-time Professional Darts Corporation World Champion (2020, 2022) and a former World No. 1. He is one of the sport's most decorated players, winning nearly 50 PDC titles including the World Matchplay, UK Open, and multiple European Championships. 
@@ -282,7 +296,14 @@ dart.data.cleaned = dart.data |>
     #uses the last character in the score and makes it an integar
     #Possible bc it can never be more than 5
 
-playername = c("Luke Littler", "Luke Humphries", "Michael van Gerwen", "Michael Smith","Nathan Aspinall", "Rob Cross", "Gerwyn Price", "Peter Wright")
+playername = c("Luke Littler", 
+               "Luke Humphries", 
+               "Michael van Gerwen", 
+               "Michael Smith",
+               "Nathan Aspinall", 
+               "Rob Cross", 
+               "Gerwyn Price", 
+               "Peter Wright")
 
 legswon = rep(NA, 8)
 legslost = rep(NA, 8) 
@@ -318,17 +339,18 @@ player.stats = tibble(
 #| fig-height: 3
 #| scale: "80%"
 #| fig-align: "center"
-#| size: scriptsize
+
 
 ggplot(player.stats) + # Specify Data
 geom_bar(aes(x = reorder(Player, Prop_Win), # Specify x-axis, also puts in order of prob
              y = Prop_Win), stat = "identity") + # Specify y-axis, also doesn't compute anything new
 geom_hline(yintercept = 0)+ # Plot x-axis
+ylim(c(0, 0.6))+
+coord_flip()+
 theme_bw() + # A cleaner theme
 labs(x = "Player", # Specify axis labels
      y = "Proportion of Wins") +
-ggtitle("Each Players' Win Percentage")+ # Plot title
-theme(axis.text.x = element_text(angle = 45, hjust = 1))
+ggtitle("Each Players' Win Percentage") # Plot title
 ```
 
 ```{r}
@@ -354,7 +376,7 @@ knitr::kable(digits = 2)
 #creating table
 ```
 
-The graphical summary demonstates that the proportion of winning is relatively close between Littler and Humphries, Smith and Gerwen and Aspinall, and Price and Cross. Wright's Win percentage is much lower than any other player. Other than Wright, the other players win percentage are at most 5% away from a 50/50 chance of winning. In the numerical summary, Luke Littler has both the most legs lost and legs won, likely because he competed in the most total legs. This demonstrates that his matches typically went on for longer. Alternatively, Wright has the lowest amount of legs lost, but this is largely because he lost extremely quickly. This then affirms my choice to use win proportion over count in the graphical summary as the number of legs varies in each match and can poorly represent those with longer or shorter average matches. More accurate measures include the Winning percentage of the players and the spread, demonstrating how often they won and the frequency of winning compared to the frequency of losing. The Spread is a more of an accurate measure of count compared to just legs won or lost as it provides a clear representation of if a player wins or loses more.
+The graphical summary demonstates that the proportion of winning is relatively close between Littler and Humphries, Smith and Gerwen and Aspinall, and Price and Cross. Wright's Win percentage is much lower than any other player. Other than Wright, the other players win percentage are at most 5% away from a 50/50 chance of winning, with some variability due to theta. In the numerical summary, Luke Littler has both the most legs lost and legs won, likely because he competed in the most total legs. This demonstrates that his matches typically went on for longer. Alternatively, Wright has the lowest amount of legs lost, but this is largely because he lost extremely quickly. This then affirms my choice to use win proportion over count in the graphical summary as the number of legs varies in each match and can poorly represent those with longer or shorter average matches. More accurate measures include the Winning percentage of the players and the spread, demonstrating how often they won and the frequency of winning compared to the frequency of losing. The Spread is a more of an accurate measure of count compared to just legs won or lost as it provides a clear representation of if a player wins or loses more.
 
 ## Altham's Multiplicative Binomial Distribution
 For each player in the 2024 season, use the number of legs won in each match to compute maximium likelihood estimates for $p$ and $\theta$. \
@@ -371,6 +393,7 @@ dart.data.cleaned = dart.data.cleaned|>
 mutate(lose = as.integer(str_sub(Score, -1)),
        win = as.integer(str_sub(Score, 1,1)))
        #establishes the number of legs won/lost
+       #ensures they're saved as integars
        #saves them in data set as columns
 
 Littler = as.numeric(c(dart.data.cleaned$win[dart.data.cleaned$Winner=="Luke Littler"], 
@@ -410,19 +433,6 @@ win = list(Littler,
 ```
 
 ```{r}
-daltbinom = function(x, size, prob, theta){
- normalizing.constant = 0
-
- for(j in 0:size){
- normalizing.constant <- normalizing.constant +
- choose(size, j) * prob^j * (1-prob)^(size-j) * theta^(j*(size-j))
- }
- (1/normalizing.constant) *
- choose(size, x) * prob^x * (1-prob)^(size-x) * theta^(x*(size-x)) *
- (x>=0)*(x<=size)
- }
-#adjusting past function for multiplicative beta binomial distribution
-
 llaltbinom = function(par, data, mle=F){
   prob = ifelse(mle, 1/(1+exp(-par[1])), par[1])
   theta = ifelse(mle, exp(par[2]), par[2])
@@ -462,7 +472,7 @@ knitr::kable(digits = 2)
 #creates table
 ```
 
-The probability parameter indicates what an accurate estimate of a  given player's probability of winning a match. The theta parameter is a good estimate for how likely the match is to be close. A higher theta value indicates a greater liklihood of a close match. Therefore, a low theta value and a low probability indicate a high chance of losing quickly in a match. A high theta value and a low probability indicate a greater chance to lose, but it is more likely to be close and there is a greater chance to win than if the theta value was lower. A low theta value and a high probability indicate a greater chance to win, but it is less likely to be close and thus, there is a greater chance to lose than if the theta value was higher. A high theta value and a high probability indicate a high chance of winning quickly in a match.
+The probability parameter indicates what an accurate estimate of a  given player's probability of winning a match, with some variation depending on the theta value. The theta parameter is a good estimate for how likely the match is to be close. A higher theta value indicates a greater liklihood of a close match. Therefore, a low theta value and a low probability indicate a high chance of losing quickly in a match. A high theta value and a low probability indicate a greater chance to lose, but it is more likely to be close and there is a greater chance to win than if the theta value was lower. A low theta value and a high probability indicate a greater chance to win, but it is less likely to be close and thus, there is a greater chance to lose than if the theta value was higher. A high theta value and a high probability indicate a high chance of winning quickly in a match.
 
 ## Altham's Multiplicative Beta Binomial Distribution
 
@@ -542,6 +552,38 @@ SD = rep(NA, 8))
 ```
 
 ```{r}
+#| label: Beta.distributions
+#| fig-width: 10
+#| fig-height: 7
+#| scale: "80%"
+#| fig-align: "center"
+
+p_grid = seq(0, 1, length.out = 1000)
+
+ggdat <- results.2 |>
+          mutate(Player = as.factor(Player)) |>
+          rowwise() |>
+          do({
+            data.frame(
+              Player = .$Player,
+              p = p_grid,
+              density = dbeta(p_grid, .$Alpha, .$Beta))
+              }) |>
+  ungroup()
+
+ggplot(ggdat, aes(x = p, y = density)) +
+  geom_line(color = "steelblue", size = 1) +
+  facet_wrap(~ Player, scales = "free_y") +
+  labs(
+    title = "Beta Distributions by Player",
+    x = "Probability (p)",
+    y = "Density"
+  ) +
+  theme_bw()
+
+```
+
+```{r}
 #| label: tbl-Parameters-MBB
 #| tbl-cap: "Each Player's Multiplicative Beta Binomial Parameters."
 #| tbl-align: "center"
@@ -556,6 +598,10 @@ select(Player,
 knitr::kable(digits = 2)
 #creates a table with all parameter and distribution values
 ```
+
+**Comments:**
+
+The maximum likelihood estimates demonstrate that when the ratio of $\alpha$ to $\beta$ is closer to 1, the mean probability of winning a leg increases with some variability due to the estimate of theta (as theta increases, the standard deviation increases). 
 
 ## Executive Summary
 Summarize the work you've done here to provide a brief (200-300 word) data-driven summary of the 2024 Premier League season using your work in Lab 10. Your summary should be professional, clear, and all claims should be corroborated with statistical support.

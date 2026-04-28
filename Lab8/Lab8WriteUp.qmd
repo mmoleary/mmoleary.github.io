@@ -101,7 +101,7 @@ There are eight possible outcomes for Player A:
 
 **Solution**
 
-$P(X>=2) = 1 - F(1) = f(2) + f(3)$
+$P(X\geq2) = 1 - F(1) = f(2) + f(3)$
 ```{r}
 bin.cdf = 1- pbinom(1, 3, 0.7) 
 bin.pmf = dbinom(2, 3, 0.7) + dbinom(3,3, 0.7)
@@ -111,11 +111,11 @@ bin.pmf
 
 ```{r}
 #| label: Binom.PMF/CDF
-#| fig-width: 5
+#| fig-width: 10
 #| fig-height: 3
 #| scale: "80%"
 #| fig-align: "center"
-#| size: scriptsize
+
 ggdat <- tibble(x = 0:3) |>
  mutate(PMF = dbinom(x, 3, 0.7), 
         CDF = pbinom(x, 3, 0.7))
@@ -123,12 +123,15 @@ ggdat <- tibble(x = 0:3) |>
 #use the _binom function for the binomial distribution
 
 PMF.plot <- ggplot() +
- geom_linerange(data = ggdat,
-aes(x = x, ymin = 0, ymax = PMF)) + #Specifies PMF data
-geom_hline(yintercept = 0) +
-scale_x_continuous("x", breaks=0:3) + #0:3 for diff outcomes
-ylab("Probability") +
-theme_bw()
+  geom_linerange(data = ggdat,
+  aes(x = x, 
+      ymin = 0, 
+      ymax = PMF)) + #Specifies PMF data
+  geom_hline(yintercept = 0) +
+  scale_x_continuous("x", breaks=0:3) + 
+  #0:3 for diff outcomes
+  ylab("Probability") +
+  theme_bw()
 
 CDF.plot <- ggplot() +
   geom_step(data=ggdat, aes(x = x, y = CDF)) + #ensures its not a smooth line
@@ -143,11 +146,11 @@ PMF.plot | CDF.plot
 
 ```{r}
 #| label: Binom.Solution
-#| fig-width: 5
+#| fig-width: 10
 #| fig-height: 3
 #| scale: "80%"
 #| fig-align: "center"
-#| size: scriptsize
+
 
 ggdat <- tibble(x = 0:3) |>
 mutate(PMF = dbinom(x, prob = 0.70, size = 3),
@@ -162,7 +165,6 @@ geom_linerange(data = ggdat |> filter(x >= 2), # when x is greater than 2
   color = "darkorchid2", linewidth = 2, alpha = 0.50) + #highlight w color
 geom_hline(yintercept = 0) +
 scale_x_continuous("x", breaks = 0:3) +
-ylim(0, 1) +
 ylab("Probability") +
 theme_bw()
 
@@ -171,6 +173,13 @@ CDF.plot <- ggplot() +
   geom_point(data=ggdat, aes(x = x, y = CDF)) +
   geom_hline(yintercept = 0) +
   scale_x_continuous("x", breaks=0:3) +
+  geom_segment(aes(x = 1, 
+                   y = pbinom(1, prob = 0.70, size = 3), 
+                   xend = 0, yend = pbinom(1, prob = 0.70, size = 3)),
+               color = "darkorchid2", linetype = "dashed", size = 1) +
+    geom_point(aes(x = 1, 
+                   y = pbinom(1, prob = 0.70, size = 3)), 
+                   color = "darkorchid2", size = 2)+
   ylab("Cumulative Probability") +
   theme_bw()
 
@@ -184,25 +193,25 @@ In intermediate courses, we learn the Negative Binomial distribution that we use
 
 **Solution**
 
-In order to compute the probability with a negative binomial distribution, we need to restrict $x$ to $0:2$ because if there are more than two failures, the match will end. Additionally, we need the $r$th success to be two, as that is our event of interest (player A winning). 
+In order to compute the probability with a negative binomial distribution, we need to restrict $x$ to $0:3$ because there is a maximum of three matches. Additionally, we need the $r$th success to be two, as that is our event of interest (player A winning). 
 To calculate this probability, we can use:
 
-$P(X<=1) = f(1) + f(2) = F(1)$
+$P(X\leq1) = f(1) + f(2) = F(1)$
 
 ```{r}
-dnbinom(0,2,.7) + dnbinom(1,2,.7)
+dnbinom(0,2,.7) + dnbinom(1,3,.7)
 pnbinom(1, 2, 0.7)
 ```
 
 ```{r}
 #| label: Neg.cdf/pmf
-#| fig-width: 5
+#| fig-width: 10
 #| fig-height: 3
 #| scale: "80%"
 #| fig-align: "center"
-#| size: scriptsize
 
-ggdat <- tibble(x = 0:2) |>
+
+ggdat <- tibble(x = -1:3) |> #-1 so graph drops to x axis
 mutate(PMF = dnbinom(x, size = 2, prob = 0.70), #2 for reasons above
        CDF = pnbinom(x, size = 2, prob = 0.70))
 
@@ -210,7 +219,7 @@ mutate(PMF = dnbinom(x, size = 2, prob = 0.70), #2 for reasons above
  geom_linerange(data = ggdat,
  aes(x = x, ymin = 0, ymax = PMF)) +
  geom_hline(yintercept = 0) +
-scale_x_continuous("x", breaks = 0:2) +
+scale_x_continuous("x", breaks = 0:3) +
  ylab("Probability") +
 theme_bw()
 
@@ -218,7 +227,7 @@ CDF.plot <- ggplot() +
 geom_step(data = ggdat, aes(x = x, y = CDF)) +
 geom_point(data = ggdat, aes(x = x, y = CDF)) +
 geom_hline(yintercept = 0) +
-scale_x_continuous("x", breaks = 0:2) +
+scale_x_continuous("x", breaks = 0:3) +
 ylab("Cumulative Probability") +
 theme_bw()
 
@@ -227,13 +236,12 @@ PMF.plot | CDF.plot
 
 ```{r}
 #| label: Neg.Win
-#| fig-width: 5
+#| fig-width: 10
 #| fig-height: 3
 #| scale: "80%"
 #| fig-align: "center"
-#| size: scriptsize
 
-ggdat <- tibble(x = 0:2) |>
+ggdat <- tibble(x = -1:3) |>
 mutate(PMF = dnbinom(x, size = 2, prob = 0.70),
        CDF = pnbinom(x, size = 2, prob = 0.70))
 
@@ -244,18 +252,18 @@ mutate(PMF = dnbinom(x, size = 2, prob = 0.70),
             aes(x = x, ymin = 0, ymax = PMF),
             color = "darkorchid2", linewidth = 2, alpha = 0.50) +
  geom_hline(yintercept = 0) +
-scale_x_continuous("x", breaks = 0:2) +
+scale_x_continuous("x", breaks = 0:3) +
  ylab("Probability") +
 theme_bw()
 
 CDF.plot <- ggplot() +
 geom_step(data = ggdat, aes(x = x, y = CDF)) +
 geom_point(data = ggdat, aes(x = x, y = CDF)) +
-  geom_segment(aes(x = 1, y = 0.784, xend = 0, yend = 0.784),
+  geom_segment(aes(x = 1, y = 0.784, xend = -1, yend = 0.784),
                color = "darkorchid2", linetype = "dashed", size = 1) +
     geom_point(aes(x = 1, y = 0.784), color = "darkorchid2", size = 2)+
 geom_hline(yintercept = 0) +
-scale_x_continuous("x", breaks = 0:2) +
+scale_x_continuous("x", breaks = 0:3) +
 ylab("Cumulative Probability") +
 theme_bw()
 #will draw line from x=1 to probability and highlight dot
@@ -280,11 +288,10 @@ The primary benefit is that the Beta-Binomial enables us to specify some uncerta
 
 ```{r}
 #| label: Beta.pdf/cdf
-#| fig-width: 5
+#| fig-width: 10
 #| fig-height: 3
 #| scale: "80%"
 #| fig-align: "center"
-#| size: scriptsize
 
 alpha = 7
 beta = 3
@@ -312,11 +319,10 @@ PDF.plot | CDF.plot
 
 ```{r}
 #| label: Beta.Win
-#| fig-width: 5
+#| fig-width: 10
 #| fig-height: 3
 #| scale: "80%"
 #| fig-align: "center"
-#| size: scriptsize
 
 alpha = 7
 beta = 3
@@ -347,7 +353,7 @@ theme_bw()
 PDF.plot | CDF.plot
 ```
 
-These plots portray the probability distributions of the probability of player A winning a match. For example, the probability of the probability of player A winning at most 75% of the time is about 60%. In terms of the binomial distribution, this inconsistent probability in player A winning each round makes each win less certain. Ultimately, the Beta distribution allows a greater variation in the probability of Player A to win each match in the binomial distribution.
+These plots portray the probability distributions of the probability of player A winning a leg. For example, the probability of the probability of player A winning at most 75% of the time is about 60%. In terms of the binomial distribution, this inconsistent probability in player A winning each round makes each win less certain. Ultimately, the Beta distribution allows a greater variation in the probability of Player A to win each leg in the binomial distribution.
 
 1. How does the Beta incorporate uncertainty about the skill of Player A? **Compute the mean and variance of the distribution.**\
 **Hint**: You will find the `integrate(...)` function helpful here. 
@@ -393,7 +399,7 @@ The probability that player A has a win probability of at least .5 is approximat
 
 **Solution**
 
-$P(X <= 0.9) = F(p = 0.9)$
+$P(X \leq 0.9) = F(p = 0.9)$
 
 ```{r}
 qbeta(.9, 7, 3)
@@ -402,6 +408,12 @@ qbeta(.9, 7, 3)
 
 The 90th percentile of Player A's win probability is about 0.871.
 ```{r}
+#| label: Beta.90th
+#| fig-width: 10
+#| fig-height: 3
+#| scale: "80%"
+#| fig-align: "center"
+
 ggdat <- tibble(x = seq(0, 1, length.out=1000))|>
 mutate(PDF = dbeta(x, 7, 3, log = FALSE),
 CDF = pbeta(x, 7, 3, lower.tail = TRUE, log.p = FALSE))
@@ -438,7 +450,13 @@ library("extraDistr")
 ```
 
 ```{r}
-ggdat <- tibble(x = 0:3) |>
+#| label: BBDistribution
+#| fig-width: 10
+#| fig-height: 3
+#| scale: "80%"
+#| fig-align: "center"
+
+ggdat <- tibble(x = -1:4) |>
 mutate(PMF = dbbinom(x,3,7,3),
       CDF= pbbinom(x,3,7,3))
 #alpha, beta, and number of games is fixed, wins is between 0 and 3
@@ -462,7 +480,7 @@ CDF.plot <- ggplot() +
 PMF.plot | CDF.plot
 ```
 
-$P(X >= 2) = F( X <= 1)$
+$P(X \geq 2) = 1 - F( X \leq 1)$
 
 ```{r}
 1 - pbbinom(q = 1, size = 3, alpha = 7, beta = 3) 
@@ -470,7 +488,13 @@ $P(X >= 2) = F( X <= 1)$
 ```
 
 ```{r}
-ggdat <- tibble(x = 0:3) |>
+#| label: BBDistribution.Win
+#| fig-width: 10
+#| fig-height: 3
+#| scale: "80%"
+#| fig-align: "center"
+
+ggdat <- tibble(x = -1:4) |>
 mutate(PMF = dbbinom(x,3,7,3),
        CDF= pbbinom(x,3,7,3))
 
@@ -490,6 +514,16 @@ CDF.plot <- ggplot() +
   geom_step(data = ggdat, aes(x = x, y = CDF)) +
   geom_point(data = ggdat, aes(x = x, y = CDF)) +
   geom_hline(yintercept = 0) +
+  geom_point(data = ggdat, aes(x = x, y = CDF)) +
+  geom_segment(aes(x = 1,
+                   y = pbbinom(1, 3, 7, 3), 
+                   xend = -1, 
+                   yend = pbbinom(1, 3, 7, 3)),
+              color = "darkorchid2", linetype = "dashed", size = 1) +
+  geom_point(aes(x = 1, 
+                 y = pbbinom(1, 3, 7, 3)), 
+                 color = "darkorchid2", 
+                 size = 2)+
   scale_x_continuous("x", breaks = 0:3) +
   ylab("Cumulative Probability") +
   theme_bw()
@@ -576,11 +610,10 @@ $$c = \sum_{i=0}^n {n \choose i} p^i (1-p)^{n-i} \theta^{i(n-i)}$$
 
 ```{r}
 #| label: Alt.PMF
-#| fig-width: 5
+#| fig-width: 10
 #| fig-height: 3
 #| scale: "80%"
 #| fig-align: "center"
-#| size: scriptsize
 
 daltbinom = function(x, n, p, t){
   i = 0:n 
@@ -644,11 +677,10 @@ This demonstrates that as theta increases, there is a greater chance of winning 
 
 ```{r}
 #| label: Alt.CDF
-#| fig-width: 5
+#| fig-width: 10
 #| fig-height: 3
 #| scale: "80%"
 #| fig-align: "center"
-#| size: scriptsize
 
 paltbinom = function(x, n, p, t){
             i = 0:x
@@ -707,11 +739,10 @@ CDF.plot.1 | CDF.plot.2 | CDF.plot.3
 
 ```{r}
 #| label: Winning.Prob
-#| fig-width: 5
+#| fig-width: 10
 #| fig-height: 3
 #| scale: "80%"
 #| fig-align: "center"
-#| size: scriptsize
 
 ggdat <- tibble(x = 0:3) |>
  mutate(PMF = daltbinom(x, 3, 0.70, 0.5))
@@ -797,11 +828,10 @@ $$f_X(x) = \left[\int_{0}^1 dp
 
 ```{r}
 #| label: Alt.Mult.BBinom
-#| fig-width: 5
+#| fig-width: 10
 #| fig-height: 3
 #| scale: "80%"
 #| fig-align: "center"
-#| size: scriptsize
 
 daltbbinom = function(x, n, alpha, beta, t){
   integrand = Vectorize(function(p){
@@ -876,7 +906,7 @@ theme_bw()
 PMF.plot.1 | PMF.plot.2 | PMF.plot.3
 ```
 
-Under this distribution, if theta is less than one, then there is a greater liklihood of winning all three matches, if theta is greater than 1 then there is a greater liklihood of winning two matches and losing one. If theta is 1, then there is an equal chance of winning two or three matches.
+Under this distribution, if theta is less than one, then there is a greater liklihood of winning all three legs, if theta is greater than 1 then there is a greater liklihood of winning two legs and losing one. If theta is 1, then there is an equal chance of winning two or three legs.
 
 # A Comparison
 Compute the probabilities for all outcomes for Player A.
@@ -983,11 +1013,10 @@ comparing = tibble(
 ```
 ```{r}
 #| label: comparing_probabilities
-#| fig-width: 5
-#| fig-height: 3
+#| fig-width: 10
+#| fig-height: 6
 #| scale: "80%"
 #| fig-align: "center"
-#| size: scriptsize
 
 ggplot(comparing) + #comparing ensures its the correct tibble
 geom_bar(aes (x = distribution, #distribution on the x-axis
