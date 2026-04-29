@@ -237,6 +237,9 @@ window.Quarto = {
  <span class="menu-text">Lab Eleven – Point Estimation and Resampling</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Review/Probability.qmd</span>
+  </li>
     </ul>
     </div>
 </nav>
@@ -415,7 +418,7 @@ window.Quarto = {
 <span id="cb6-18"><a href="#cb6-18"></a>  <span class="fu">geom_step</span>(<span class="at">data=</span>ggdat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> CDF)) <span class="sc">+</span></span>
 <span id="cb6-19"><a href="#cb6-19"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>ggdat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> CDF)) <span class="sc">+</span></span>
 <span id="cb6-20"><a href="#cb6-20"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb6-21"><a href="#cb6-21"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"x"</span>, <span class="at">breaks=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"x"</span>, <span class="at">breaks=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
 <span id="cb6-22"><a href="#cb6-22"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, </span>
 <span id="cb6-23"><a href="#cb6-23"></a>                   <span class="at">y =</span> <span class="fu">pbinom</span>(<span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.70</span>, <span class="at">size =</span> <span class="dv">3</span>), </span>
 <span id="cb6-24"><a href="#cb6-24"></a>                   <span class="at">xend =</span> <span class="dv">0</span>, <span class="at">yend =</span> <span class="fu">pbinom</span>(<span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.70</span>, <span class="at">size =</span> <span class="dv">3</span>)),</span>
@@ -524,7 +527,7 @@ window.Quarto = {
 <span id="cb12-20"><a href="#cb12-20"></a>               <span class="at">color =</span> <span class="st">"darkorchid2"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb12-21"><a href="#cb12-21"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="fl">0.784</span>), <span class="at">color =</span> <span class="st">"darkorchid2"</span>, <span class="at">size =</span> <span class="dv">2</span>)<span class="sc">+</span></span>
 <span id="cb12-22"><a href="#cb12-22"></a><span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb12-23"><a href="#cb12-23"></a><span class="fu">scale_x_continuous</span>(<span class="st">"x"</span>, <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb12-23"><a href="#cb12-23"></a><span class="fu">scale_x_continuous</span>(<span class="st">"x"</span>, <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
 <span id="cb12-24"><a href="#cb12-24"></a><span class="fu">ylab</span>(<span class="st">"Cumulative Probability"</span>) <span class="sc">+</span></span>
 <span id="cb12-25"><a href="#cb12-25"></a><span class="fu">theme_bw</span>()</span>
 <span id="cb12-26"><a href="#cb12-26"></a><span class="co">#will draw line from x=1 to probability and highlight dot</span></span>
@@ -843,7 +846,7 @@ window.Quarto = {
 <span id="cb29-28"><a href="#cb29-28"></a>                 <span class="at">y =</span> <span class="fu">pbbinom</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">3</span>)), </span>
 <span id="cb29-29"><a href="#cb29-29"></a>                 <span class="at">color =</span> <span class="st">"darkorchid2"</span>, </span>
 <span id="cb29-30"><a href="#cb29-30"></a>                 <span class="at">size =</span> <span class="dv">2</span>)<span class="sc">+</span></span>
-<span id="cb29-31"><a href="#cb29-31"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"x"</span>, <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb29-31"><a href="#cb29-31"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"x"</span>, <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
 <span id="cb29-32"><a href="#cb29-32"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative Probability"</span>) <span class="sc">+</span></span>
 <span id="cb29-33"><a href="#cb29-33"></a>  <span class="fu">theme_bw</span>()</span>
 <span id="cb29-34"><a href="#cb29-34"></a></span>

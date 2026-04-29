@@ -41,6 +41,11 @@ format:
       - right=0.75in
 format-links: [pdf]
 ---
+```{r}
+library("tidyverse")
+library("patchwork")
+library("knitr")
+```
 
 # Probability
 
@@ -88,6 +93,113 @@ format-links: [pdf]
 
 5. Poisson - models the number of events of interst in a given time or space. It has one parameter $\lambda$ that is the average number of events of interest in a given time or space.
 
+## Discrete Probability Distribution Example
+
+The Toronto Blue Jays' Manager, John Schneider, wants to evaluate the probability of Vladimir Guerrera reaching first base in three at bats. Given he has an average on base percentage of 0.444 so far in the 2026 Season, what is the probability he will reach first base in twice?
+
+First, because we are looking for a countable event of interest, reaching first base, we know that we will have to use a discrete probability distribution. Next, we are given the probability that he will reach first base, his average on base percentage, which indicates that it will not be a hypergeometric or Poisson distribution. Because we are given a set number of trials greater than one, we should use the Binomial distribution where $n=3$, $p=0.435$, and $x=2$ as we want to know when he will reach the base twice. 
+
+```{r}
+#| label: Vladdy.PMF
+#| fig-width: 10
+#| fig-height: 3
+#| scale: "80%"
+#| fig-align: "center"
+
+ggdat <- tibble(x = 0:3) |>
+ mutate(PMF = dbinom(x, 3, 0.444))
+#make data contain the PMF
+#use the dbinom function for the binomial distribution for PMF
+
+PMF.plot <- ggplot() +
+  geom_linerange(data = ggdat,
+                aes(x = x, 
+                    ymin = 0, 
+                    ymax = PMF)) + 
+                    #Specifies PMF data
+  geom_hline(yintercept = 0) +
+  geom_linerange(data = ggdat |> 
+    filter(x == 2), # when x equals 2
+    aes(x = x, ymin = 0, ymax = PMF), 
+    color = "darkorchid2", linewidth = 2, alpha = 0.50) + #highlight w color
+  scale_x_continuous("x", breaks= 0:3) + 
+  #0:3 for diff outcomes
+  ylab("Probability of Vladdy Getting to First") +
+  theme_bw()
+
+PMF.plot
+```
+
+This PMF graph demonstrates how often Guerrera will reach first base twice relative to the other possibilities. This can be calculated in R with: 
+
+```{r}
+dbinom(x = 2, size = 3, prob = 0.444)
+```
+
+Given that John Schneider also wants to see when Guerrera reaches first base at least twice, how could this be represented graphically and calculated in R?
+
+We should still use the binomial distribution, but adjust our calculations and use the CDF as well as the PMF.
+
+```{r}
+#| label: Vladdy.PMF/CDF
+#| fig-width: 10
+#| fig-height: 3
+#| scale: "80%"
+#| fig-align: "center"
+
+
+ggdat <- tibble(x = -1:3) |>
+  mutate(PMF = dbinom(x, size = 3, prob = 0.444),
+         CDF = pbinom(q = x, size = 3, prob = 0.444))
+
+
+PMF.plot <- ggplot() +
+  geom_linerange(data = ggdat,
+  aes(x = x, ymin = 0, ymax = PMF)) +
+  geom_linerange(data = ggdat |> 
+    filter(x >= 2), # when x is at least than 2
+    aes(x = x, ymin = 0, ymax = PMF), 
+    color = "darkorchid2", 
+            linewidth = 2, 
+            alpha = 0.50) + #highlight w color
+  geom_hline(yintercept = 0) +
+  scale_x_continuous("x", breaks = 0:3) +
+  ylab("Probability") +
+  theme_bw()
+
+CDF.plot <- ggplot() +
+  geom_step(data=ggdat, aes(x = x, y = CDF)) +
+  geom_point(data=ggdat, aes(x = x, y = CDF)) +
+  geom_hline(yintercept = 0) +
+  scale_x_continuous("x", breaks=0:3, expand = c(0, 0)) +
+  geom_segment(aes(x = 2, 
+                   y = pbinom(q = 2, 
+                              size = 3, 
+                              prob = 0.444), 
+                   xend = -1, yend = pbinom(q = 2, 
+                                            size = 3, 
+                                            prob = 0.444)),
+               color = "darkorchid2", linetype = "dashed", size = 1) +
+    geom_point(aes(x = 2, 
+                   y = pbinom(q = 2, 
+                              size = 3, 
+                              prob = 0.444)), 
+                   color = "darkorchid2", size = 2)+
+  ylab("Cumulative Probability") +
+  theme_bw()
+
+PMF.plot | CDF.plot
+```
+
+To calculate $P(X \geq 2)$, we need to use either $1 - F_x(1)$ or $f_x(2) + f_x(3)$. We can do this in R with:
+
+```{r}
+#Using PMF
+dbinom(2, 3, 0.444) + dbinom(3, 3, 0.444) 
+#Using CDF
+1 -pbinom(1, 3, 0.444)
+```
+
 ## Continuous Probability Distributions 
 
 There are eight main continuous probability functions with built in r functions.
@@ -107,3 +219,74 @@ There are eight main continuous probability functions with built in r functions.
 7. Student T distribution - a model used for statistical inference. It is a symmetric and bell shaped dsitribution, similar to Gaussian, but it is more peaked with wider tails. It is parameterized by the degrees of freedom, $v$, which controls the variance. $v = n-1$. As $v$ increases, the student T distribution approaches the Gaussian Distribution.
 
 8. F Distribution - a model used for statistical inference. It has a strictly positive support and is right skewed. It has two parameters: $u$, the numerator degrees of freedom, and $v$ the denominator degrees of freedom.
+
+## Continuous Probability Distribution
+
+A Toronto Blue Jays fan wants to find what the probability of Vladimir Guerrera's on base percentage (0.444) is relative to other MLB players. If the distribution of all MLB players on base average is symmetrical and the population mean is 0.322 and the population standard deviation is 0.041, what is the probability Guerrera has this OBP?
+
+We need to use a continuous probability distribution here because on base percentage can be measured in different levels of units (unlimited decimal places) and are not countable. Then, to determine which distribution is best for this calculation, we can note that the population data distribution is symmetrical, leaving us with the Gaussian, Student T, Chi and Uniform distributions. We were also given a population mean and standard deviation, indicating we will need to use the Gaussian from those distributions.
+
+To represent this graphically: 
+
+```{r}
+#| label: Continuous.Example
+#| fig-width: 10
+#| fig-height: 3
+#| scale: "80%"
+#| fig-align: "center"
+
+
+
+ggdat <- tibble(x = seq(0, 1, length.out=1000)) |>
+mutate(PDF = dnorm(x = x, mean = 0.322, sd = 0.041),
+       CDF = pnorm(q = x, mean = 0.322, sd = 0.041))
+
+PDF.plot <- ggplot(ggdat) +
+  geom_line(aes(x = x, y = PDF)) +
+  geom_ribbon(data = ggdat|> filter(x <= 0.444), #fills area after x= 0.444
+  aes(x=x, ymin=0, ymax= PDF), #max keeps it from going above line
+  fill= "darkorchid2", alpha= .5) +
+  geom_hline(yintercept = 0) +
+  xlab("OBP") +
+  ylab("Density") +
+  theme_bw()
+
+CDF.plot <- ggplot(ggdat) +
+  geom_line(aes(x = x, y = CDF)) +
+  geom_point(data=tibble(x=0.441) |> 
+    mutate(CDF = pnorm(q = x, 
+                        mean = 0.322, 
+                        sd = 0.041)),
+            aes(x = x, y=CDF), 
+            color="darkorchid2")+ #makes visible dot to mark p=0.5
+  geom_segment(aes(x = 0.444,
+                   y = pnorm(q = 0.444, 
+                        mean = 0.322, 
+                        sd = 0.041),
+                   xend = 0, 
+                   yend = pnorm(q = 0.444, 
+                        mean = 0.322, 
+                        sd = 0.041)),
+              color = "darkorchid2", linetype = "dashed", size = 1) +
+  geom_hline(yintercept = 0) +
+  xlab("OBP") +
+  scale_x_continuous(expand = c(0, 0)) +
+  ylab("Cumulative Probability") +
+  theme_bw()
+
+PDF.plot | CDF.plot
+```
+
+The area under the PMF curve (on the right) is calculated and shown on the CDF curve, where Guerrera's OBP is shown with a dot and the dotted line shows what the probability of his average is.
+
+The fan wants to see the probability of another player having a better OBP than Guerrera.This probability can be calculated in R with 1 - $F_x(0.444)$:
+
+```{r}
+1 - pnorm(0.444, 0.322, 0.041)
+```
+
+The probability of another MLB player this season having a better OBP than Guerrera is less than 1% (This is subject to variation as the season progresses)!
+
+## Citations
+
+I used R [@R] for my coding language, the knitr package [@knitr] for organizing graphs, the patchwork package [@patchwork] to make clean graphs, and the tidyverse package [@tidyverse] for more readable code and graphs.
