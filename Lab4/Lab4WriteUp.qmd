@@ -181,7 +181,7 @@ evaluate.row = function(i){
                        if(i<4){
                         "low"
                        }
-                       else if(i=4 & i<=7){
+                       else if(i>=4 & i<=7){
                         "mid"
                        }
                        else{ 

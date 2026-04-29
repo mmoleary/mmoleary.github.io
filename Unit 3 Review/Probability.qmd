@@ -1,0 +1,109 @@
+---
+title: Unit 3 Review - Probability # Title of the document
+
+# Bibliography Details
+bibliography: ProbabilityReferences.bib  # Name of bib file in the same folder 
+bibliographystyle: apa                   # Bibliography style
+
+execute:
+  warning: false
+  message: false
+
+# Below will do html by default. To render the entire project
+# Use the following code:
+# quarto::quarto_render("Lab2WriteUp.qmd")
+
+format:
+  html: 
+    number-sections: TRUE
+    code-fold: TRUE
+    code-line-numbers: TRUE
+    cap-location: top 
+  pdf:
+    documentclass: article
+    number-sections: TRUE
+    reference-section-title: "References" 
+    code-line-numbers: TRUE
+    cap-location: top 
+    include-in-header:
+      - text: |
+          \usepackage{amsmath}
+          \usepackage[dvipsnames]{xcolor}
+          \usepackage[shortlabels]{enumitem}
+          \usepackage{parskip}
+          \usepackage{hyperref}
+          \usepackage{geometry}
+          \usepackage{float}
+    geometry:
+      - top=0.75in
+      - left=0.75in
+      - bottom=0.75in
+      - right=0.75in
+format-links: [pdf]
+---
+
+# Probability
+
+- Probabiilty is the process of examining a *random variable's* *distribution* given the random variable's *support*.
+
+## Definitions
+ 
+ * A random variable is some aspect of an observation that can be measured or recorded. In this unit, these variables will always be **quantitative**
+
+ * A distribution of a random variable tells us how often a variable can take on certain values. A probability distribution is different from a data distribution in that probability distributions can only be quantitative and they do not summarize data, but rather indicate the likelihood of variables taking on certain values. 
+
+ * The support of a random variable indicate the different values the variable can take on.
+
+ * Quantitative Distributions can take on two different types of distributions: Discrete and Continuous, and each distribution has different parameters.
+
+ * Parameters are quantities that desctibeb the population-level distribution.
+
+ * Continuous random variables can be measured in different levels of units. For example, time is a continuous random variable as it can be broken down into smaller units. Continuous probability distributions will use the Cumulative Distribution Function and the Probability Density Function.
+
+ * Discrete Random Variables are countable, they also include catagorical variables. Discrete probability functions use the probability mass function and the cumulative distribution function.
+
+ * The Cumulative Distribution Function of a random variable ( $F_x(x)$ )gives the probability that a the random variable, x, is less than or equal to a given value of x. It is graphically done in the discrete case by finding the given X value and finding its corresponding probability on the y axis, computationally, R can perform this with p_(), these values are the sum of the values in the PMF function. In the continuous case, the CDF calculates probability with the area under the curve of the PDF function. The inverse CDF is just beginning with a probability value and finding its smallest possible corresponding x value.
+
+ * This can be expressed notationally with: $F_x(2) = P(X \leq 2)$
+
+ * The Probability Mass function ( $f_x(x)$ )is only applicable in the discrete case and can inform you of the probability of x taking on a specific value.
+
+ * This can be expressed notationally with: $f_x(2) = P(X = 2) = 0.5$
+
+ * The Probability Density Function ( $f_x(x)$ ) is only applicable in the continuous case, and the integral of this function can be used to calculate x taking on a range of functions. It cannot be used to find the probability of a single value of x because that probability is always zero in the continuous case. 
+
+ * This can be expressed notationally with: $f_x(2) = P(X = 2) = 0$
+
+## Discrete Probability Distributions
+
+* There are five main discrete random variable probability distributions with built in r functions.
+
+1. Bernoulli - Models whether an event of interest occurs in a single trial. It's parameter is p, probability of the event of interest.
+
+2. Binomial - Models the count of events of interest in a set of trials. It is a generalization of the Bernoulli distribution that can be applied to more trials. It is also parameterized by p, probability of the event of interest, and by n, number of trials.
+
+3. Negative Binomial - used to model the number of events of non-interest that occur before the rth event of interest. It is also parameterized by p, probability of the event of interest in any trial, and by r, the target number events of interest.
+
+4. Hypergeometric - used to model the count of selected items of interest in a selection from a set of items. It has three parameters: k, the total number of selections, m, the number of items of interest selected from k, and n, the selected items of non-interest from k.
+
+5. Poisson - models the number of events of interst in a given time or space. It has one parameter $\lambda$ that is the average number of events of interest in a given time or space.
+
+## Continuous Probability Distributions 
+
+There are eight main continuous probability functions with built in r functions.
+
+1. Uniform - models a continuous outcome that is equally likely to occur within a lower and upper bound. It's parameters are a, the population minimum, and b, the population maximum
+
+2. Gaussian/Normal - models a continuous outcome more likely occur near the mean and symmetrically less likely to occur near the tails. It is parametered by the population mean, $\mu$, and the population standard deviation, $\sigma$.
+
+3. Lognormal - models a continuous outcome that is strictly positive. This distribution is right skewed. If $x$ follows a lognormal distribution then $log(x)$ will follow the Gaussian distribution. It is parametered by the population mean of $log(x)$, $\mu$, and the population standard deviation of $log(x)$, $\sigma$. 
+
+4. Exponential - models a continuous outcome that is strictly positive, and is thus right-skewed. It has one rate parameter $\lambda$, which is the inverse of the population mean.
+
+5. Gamma - models a continuous outcome that is strictly positive, and is thus right-skewed. It has two parameters: $\alpha$, the shape parameter (controls skewness), and $\beta$, the rate parameter (scales mean and variance).
+
+6. Chi-Squared distribution - a model used for statistical inference. It is strictly positive, right-skewed, and paramaeterized by degrees of freedom, $v$, which controls the mean and variance.
+
+7. Student T distribution - a model used for statistical inference. It is a symmetric and bell shaped dsitribution, similar to Gaussian, but it is more peaked with wider tails. It is parameterized by the degrees of freedom, $v$, which controls the variance. $v = n-1$. As $v$ increases, the student T distribution approaches the Gaussian Distribution.
+
+8. F Distribution - a model used for statistical inference. It has a strictly positive support and is right skewed. It has two parameters: $u$, the numerator degrees of freedom, and $v$ the denominator degrees of freedom.

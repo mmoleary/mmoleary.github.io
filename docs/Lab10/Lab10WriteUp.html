@@ -390,7 +390,7 @@ window.Quarto = {
 </div>
 <p></p>
 <p></p>
-<div class="cell">
+<div class="cell" data-layout-align="center" data-scale="80%">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>ggdat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">theta =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="fl">0.5</span>, <span class="at">to =</span> <span class="fl">1.5</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)) <span class="sc">|&gt;</span></span>
@@ -408,9 +408,9 @@ window.Quarto = {
 <span id="cb5-13"><a href="#cb5-13"></a>PMF.plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Lab10WriteUp_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Lab10WriteUp_files/figure-html/Winning.Prob-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -421,7 +421,7 @@ window.Quarto = {
 <h2 data-number="3.2" class="anchored" data-anchor-id="part-b"><span class="header-section-number">3.2</span> Part b</h2>
 <p>Now, plot Altham’s Multiplicative Binomial Distribution under the same parameters with <span class="math inline">\(\theta=0.50\)</span>, <span class="math inline">\(\theta=1\)</span>, and <span class="math inline">\(\theta=1.5\)</span>. Use <code>ncol=1</code> in <code>facet_wrap()</code> to plot the PMFs in a single column for comparing.</p>
 <p></p>
-<div class="cell">
+<div class="cell" data-layout-align="center" data-scale="80%">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>ggdat <span class="ot">&lt;-</span> ggdat <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">expand_grid</span>(</span>
@@ -431,21 +431,23 @@ window.Quarto = {
 <span id="cb6-5"><a href="#cb6-5"></a><span class="co">#expand grid allows both columns based on the theta values and x values</span></span>
 <span id="cb6-6"><a href="#cb6-6"></a><span class="co">#important for making a facet wrap later</span></span>
 <span id="cb6-7"><a href="#cb6-7"></a></span>
-<span id="cb6-8"><a href="#cb6-8"></a>PMF.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ggdat) <span class="sc">+</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a>  <span class="fu">geom_linerange</span>(<span class="at">data =</span> ggdat,</span>
-<span id="cb6-10"><a href="#cb6-10"></a>  <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> PMF)) <span class="sc">+</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"x"</span>, <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">11</span>)<span class="sc">+</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a>  <span class="fu">ylab</span>(<span class="st">"P(X = 6)"</span>) <span class="sc">+</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>theta, <span class="at">nrow =</span> <span class="cn">NULL</span>, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a>  <span class="fu">theme_bw</span>()</span>
-<span id="cb6-16"><a href="#cb6-16"></a></span>
-<span id="cb6-17"><a href="#cb6-17"></a>PMF.plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-8"><a href="#cb6-8"></a>label <span class="ot">=</span> <span class="fu">as_labeller</span>(<span class="fu">c</span>(<span class="st">"0.5"</span> <span class="ot">=</span> <span class="st">"Theta = 0.5"</span>, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"Theta = 1"</span>, <span class="st">"1.5"</span> <span class="ot">=</span> <span class="st">"Theta = 1.5"</span>))</span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a>PMF.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ggdat) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="fu">geom_linerange</span>(<span class="at">data =</span> ggdat,</span>
+<span id="cb6-12"><a href="#cb6-12"></a>  <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> PMF)) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"x"</span>, <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">11</span>)<span class="sc">+</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>  <span class="fu">ylab</span>(<span class="st">"P(X = 6)"</span>) <span class="sc">+</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>theta, <span class="at">nrow =</span> <span class="cn">NULL</span>, <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">labeller =</span> label) <span class="sc">+</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb6-18"><a href="#cb6-18"></a></span>
+<span id="cb6-19"><a href="#cb6-19"></a>PMF.plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Lab10WriteUp_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Lab10WriteUp_files/figure-html/Alt.MBD-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -472,7 +474,7 @@ window.Quarto = {
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>Expected_daltbinom<span class="ot">=</span> <span class="cf">function</span>(size, prob, theta, k){</span>
-<span id="cb7-2"><a href="#cb7-2"></a>  x <span class="ot">&lt;-</span><span class="dv">0</span><span class="sc">:</span><span class="dv">11</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>  x <span class="ot">&lt;-</span><span class="dv">0</span><span class="sc">:</span>size</span>
 <span id="cb7-3"><a href="#cb7-3"></a>  summation <span class="ot">=</span> x<span class="sc">^</span>k <span class="sc">*</span> <span class="fu">daltbinom</span>(x, size, prob, theta)</span>
 <span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">sum</span>(summation)</span>
 <span id="cb7-5"><a href="#cb7-5"></a>}</span>
@@ -486,7 +488,7 @@ window.Quarto = {
 <h2 data-number="4.2" class="anchored" data-anchor-id="part-b-1"><span class="header-section-number">4.2</span> Part b</h2>
 <p>Describe how you can use your answer to part a to find Method of Moments estimates for the parameters <span class="math inline">\(p\)</span> and <span class="math inline">\(\theta\)</span> for Altham’s Multiplicative Binomial Distribution based on data.</p>
 <p><strong>Solution</strong></p>
-<p>With the function above multiplied by <span class="math inline">\(\frac{1}{11}\)</span>, I can equate the first three <span class="math inline">\(k\)</span> sample moments to the first three <span class="math inline">\(k\)</span> population moments, and then with systems of equations, I can choose <span class="math inline">\(p\)</span> and <span class="math inline">\(\theta\)</span> based on how closely they match the sample and population moments.</p>
+<p>With the function above for <span class="math inline">\(E(x^k)\)</span>, I can equate the first two <span class="math inline">\(k\)</span> sample moments to the first two <span class="math inline">\(k\)</span> population moments, and then with systems of equations, I can choose <span class="math inline">\(p\)</span> and <span class="math inline">\(\theta\)</span> based on how closely they match the sample and population moments.</p>
 </section>
 <section id="part-c-1" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="part-c-1"><span class="header-section-number">4.3</span> Part c</h2>
@@ -510,7 +512,7 @@ window.Quarto = {
 <h2 data-number="4.4" class="anchored" data-anchor-id="part-d"><span class="header-section-number">4.4</span> Part d</h2>
 <p>Describe how you can use your answer to part c to find Maximum Likelihood estimates for the parameters <span class="math inline">\(p\)</span> and <span class="math inline">\(\theta\)</span> for Altham’s Multiplicative Binomial Distribution based on data.</p>
 <p><strong>Solution</strong></p>
-<p>I can optimize the function in part C to determine where the parameters make the probability of observing my x value most likely.</p>
+<p>I can use the optim() function to minimize the log likelihood in part C to determine where the parameters make the probability of observing my x value most likely.</p>
 </section>
 </section>
 <section id="lab-10" class="level1" data-number="5">
@@ -584,33 +586,40 @@ window.Quarto = {
 <span id="cb9-8"><a href="#cb9-8"></a>    <span class="co">#uses the last character in the score and makes it an integar</span></span>
 <span id="cb9-9"><a href="#cb9-9"></a>    <span class="co">#Possible bc it can never be more than 5</span></span>
 <span id="cb9-10"><a href="#cb9-10"></a></span>
-<span id="cb9-11"><a href="#cb9-11"></a>playername <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Luke Littler"</span>, <span class="st">"Luke Humphries"</span>, <span class="st">"Michael van Gerwen"</span>, <span class="st">"Michael Smith"</span>,<span class="st">"Nathan Aspinall"</span>, <span class="st">"Rob Cross"</span>, <span class="st">"Gerwyn Price"</span>, <span class="st">"Peter Wright"</span>)</span>
-<span id="cb9-12"><a href="#cb9-12"></a></span>
-<span id="cb9-13"><a href="#cb9-13"></a>legswon <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">8</span>)</span>
-<span id="cb9-14"><a href="#cb9-14"></a>legslost <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">8</span>) </span>
-<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#repeat for each of the platers</span></span>
-<span id="cb9-16"><a href="#cb9-16"></a></span>
-<span id="cb9-17"><a href="#cb9-17"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(playername)){</span>
-<span id="cb9-18"><a href="#cb9-18"></a>  win <span class="ot">=</span> <span class="fu">sum</span>(dart.data.cleaned<span class="sc">$</span>WinnerLegs[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span>playername[i]]) <span class="sc">+</span> </span>
-<span id="cb9-19"><a href="#cb9-19"></a>  <span class="fu">sum</span>(dart.data.cleaned<span class="sc">$</span>LoserLegs[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span>playername[i]])</span>
-<span id="cb9-20"><a href="#cb9-20"></a>  lost <span class="ot">=</span> <span class="fu">sum</span>(dart.data.cleaned<span class="sc">$</span>WinnerLegs[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span>playername[i]]) <span class="sc">+</span></span>
-<span id="cb9-21"><a href="#cb9-21"></a>  <span class="fu">sum</span>(dart.data.cleaned<span class="sc">$</span>LoserLegs[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span>playername[i]])</span>
-<span id="cb9-22"><a href="#cb9-22"></a></span>
-<span id="cb9-23"><a href="#cb9-23"></a>legswon[i] <span class="ot">=</span> win</span>
-<span id="cb9-24"><a href="#cb9-24"></a>legslost[i] <span class="ot">=</span> lost</span>
-<span id="cb9-25"><a href="#cb9-25"></a>}</span>
-<span id="cb9-26"><a href="#cb9-26"></a><span class="co">#If they are the winner, add the winners legs to win total, </span></span>
-<span id="cb9-27"><a href="#cb9-27"></a><span class="co"># if they are the loser, add the loser's legs won to win total</span></span>
-<span id="cb9-28"><a href="#cb9-28"></a><span class="co"># If they are the loser, add the winner's legs to lost total</span></span>
-<span id="cb9-29"><a href="#cb9-29"></a><span class="co"># If they are the winner, add the loser's legs to lost total</span></span>
-<span id="cb9-30"><a href="#cb9-30"></a></span>
-<span id="cb9-31"><a href="#cb9-31"></a>player.stats <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb9-32"><a href="#cb9-32"></a>  <span class="at">Player =</span> playername,</span>
-<span id="cb9-33"><a href="#cb9-33"></a>  <span class="at">Legs_Won =</span> legswon,</span>
-<span id="cb9-34"><a href="#cb9-34"></a>  <span class="at">Legs_Lost =</span> legslost,</span>
-<span id="cb9-35"><a href="#cb9-35"></a>  <span class="at">Prop_Win =</span> Legs_Won <span class="sc">/</span> (Legs_Won <span class="sc">+</span> Legs_Lost)</span>
-<span id="cb9-36"><a href="#cb9-36"></a>)</span>
-<span id="cb9-37"><a href="#cb9-37"></a><span class="co">#makes tibble w/ all info for a graph</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-11"><a href="#cb9-11"></a>playername <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Luke Littler"</span>, </span>
+<span id="cb9-12"><a href="#cb9-12"></a>               <span class="st">"Luke Humphries"</span>, </span>
+<span id="cb9-13"><a href="#cb9-13"></a>               <span class="st">"Michael van Gerwen"</span>, </span>
+<span id="cb9-14"><a href="#cb9-14"></a>               <span class="st">"Michael Smith"</span>,</span>
+<span id="cb9-15"><a href="#cb9-15"></a>               <span class="st">"Nathan Aspinall"</span>, </span>
+<span id="cb9-16"><a href="#cb9-16"></a>               <span class="st">"Rob Cross"</span>, </span>
+<span id="cb9-17"><a href="#cb9-17"></a>               <span class="st">"Gerwyn Price"</span>, </span>
+<span id="cb9-18"><a href="#cb9-18"></a>               <span class="st">"Peter Wright"</span>)</span>
+<span id="cb9-19"><a href="#cb9-19"></a></span>
+<span id="cb9-20"><a href="#cb9-20"></a>legswon <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">8</span>)</span>
+<span id="cb9-21"><a href="#cb9-21"></a>legslost <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">8</span>) </span>
+<span id="cb9-22"><a href="#cb9-22"></a><span class="co">#repeat for each of the platers</span></span>
+<span id="cb9-23"><a href="#cb9-23"></a></span>
+<span id="cb9-24"><a href="#cb9-24"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(playername)){</span>
+<span id="cb9-25"><a href="#cb9-25"></a>  win <span class="ot">=</span> <span class="fu">sum</span>(dart.data.cleaned<span class="sc">$</span>WinnerLegs[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span>playername[i]]) <span class="sc">+</span> </span>
+<span id="cb9-26"><a href="#cb9-26"></a>  <span class="fu">sum</span>(dart.data.cleaned<span class="sc">$</span>LoserLegs[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span>playername[i]])</span>
+<span id="cb9-27"><a href="#cb9-27"></a>  lost <span class="ot">=</span> <span class="fu">sum</span>(dart.data.cleaned<span class="sc">$</span>WinnerLegs[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span>playername[i]]) <span class="sc">+</span></span>
+<span id="cb9-28"><a href="#cb9-28"></a>  <span class="fu">sum</span>(dart.data.cleaned<span class="sc">$</span>LoserLegs[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span>playername[i]])</span>
+<span id="cb9-29"><a href="#cb9-29"></a></span>
+<span id="cb9-30"><a href="#cb9-30"></a>legswon[i] <span class="ot">=</span> win</span>
+<span id="cb9-31"><a href="#cb9-31"></a>legslost[i] <span class="ot">=</span> lost</span>
+<span id="cb9-32"><a href="#cb9-32"></a>}</span>
+<span id="cb9-33"><a href="#cb9-33"></a><span class="co">#If they are the winner, add the winners legs to win total, </span></span>
+<span id="cb9-34"><a href="#cb9-34"></a><span class="co"># if they are the loser, add the loser's legs won to win total</span></span>
+<span id="cb9-35"><a href="#cb9-35"></a><span class="co"># If they are the loser, add the winner's legs to lost total</span></span>
+<span id="cb9-36"><a href="#cb9-36"></a><span class="co"># If they are the winner, add the loser's legs to lost total</span></span>
+<span id="cb9-37"><a href="#cb9-37"></a></span>
+<span id="cb9-38"><a href="#cb9-38"></a>player.stats <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb9-39"><a href="#cb9-39"></a>  <span class="at">Player =</span> playername,</span>
+<span id="cb9-40"><a href="#cb9-40"></a>  <span class="at">Legs_Won =</span> legswon,</span>
+<span id="cb9-41"><a href="#cb9-41"></a>  <span class="at">Legs_Lost =</span> legslost,</span>
+<span id="cb9-42"><a href="#cb9-42"></a>  <span class="at">Prop_Win =</span> Legs_Won <span class="sc">/</span> (Legs_Won <span class="sc">+</span> Legs_Lost)</span>
+<span id="cb9-43"><a href="#cb9-43"></a>)</span>
+<span id="cb9-44"><a href="#cb9-44"></a><span class="co">#makes tibble w/ all info for a graph</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p></p>
@@ -622,11 +631,12 @@ window.Quarto = {
 <span id="cb10-2"><a href="#cb10-2"></a><span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Player, Prop_Win), <span class="co"># Specify x-axis, also puts in order of prob</span></span>
 <span id="cb10-3"><a href="#cb10-3"></a>             <span class="at">y =</span> Prop_Win), <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span> <span class="co"># Specify y-axis, also doesn't compute anything new</span></span>
 <span id="cb10-4"><a href="#cb10-4"></a><span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)<span class="sc">+</span> <span class="co"># Plot x-axis</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># A cleaner theme</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Player"</span>, <span class="co"># Specify axis labels</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a>     <span class="at">y =</span> <span class="st">"Proportion of Wins"</span>) <span class="sc">+</span></span>
-<span id="cb10-8"><a href="#cb10-8"></a><span class="fu">ggtitle</span>(<span class="st">"Each Players' Win Percentage"</span>)<span class="sc">+</span> <span class="co"># Plot title</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a><span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.6</span>))<span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="fu">coord_flip</span>()<span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># A cleaner theme</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Player"</span>, <span class="co"># Specify axis labels</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a>     <span class="at">y =</span> <span class="st">"Proportion of Wins"</span>) <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="fu">ggtitle</span>(<span class="st">"Each Players' Win Percentage"</span>) <span class="co"># Plot title</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-bar-win-percent" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -766,7 +776,7 @@ Table&nbsp;1: Each Player’s Win Record.
 </div>
 </div>
 <p></p>
-<p>The graphical summary demonstates that the proportion of winning is relatively close between Littler and Humphries, Smith and Gerwen and Aspinall, and Price and Cross. Wright’s Win percentage is much lower than any other player. Other than Wright, the other players win percentage are at most 5% away from a 50/50 chance of winning. In the numerical summary, Luke Littler has both the most legs lost and legs won, likely because he competed in the most total legs. This demonstrates that his matches typically went on for longer. Alternatively, Wright has the lowest amount of legs lost, but this is largely because he lost extremely quickly. This then affirms my choice to use win proportion over count in the graphical summary as the number of legs varies in each match and can poorly represent those with longer or shorter average matches. More accurate measures include the Winning percentage of the players and the spread, demonstrating how often they won and the frequency of winning compared to the frequency of losing. The Spread is a more of an accurate measure of count compared to just legs won or lost as it provides a clear representation of if a player wins or loses more.</p>
+<p>The graphical summary demonstates that the proportion of winning is relatively close between Littler and Humphries, Smith and Gerwen and Aspinall, and Price and Cross. Wright’s Win percentage is much lower than any other player. Other than Wright, the other players win percentage are at most 5% away from a 50/50 chance of winning, with some variability due to theta. In the numerical summary, Luke Littler has both the most legs lost and legs won, likely because he competed in the most total legs. This demonstrates that his matches typically went on for longer. Alternatively, Wright has the lowest amount of legs lost, but this is largely because he lost extremely quickly. This then affirms my choice to use win proportion over count in the graphical summary as the number of legs varies in each match and can poorly represent those with longer or shorter average matches. More accurate measures include the Winning percentage of the players and the spread, demonstrating how often they won and the frequency of winning compared to the frequency of losing. The Spread is a more of an accurate measure of count compared to just legs won or lost as it provides a clear representation of if a player wins or loses more.</p>
 </section>
 <section id="althams-multiplicative-binomial-distribution-1" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="althams-multiplicative-binomial-distribution-1"><span class="header-section-number">5.2</span> Altham’s Multiplicative Binomial Distribution</h2>
@@ -786,42 +796,43 @@ Table&nbsp;1: Each Player’s Win Record.
 <span id="cb13-2"><a href="#cb13-2"></a><span class="fu">mutate</span>(<span class="at">lose =</span> <span class="fu">as.integer</span>(<span class="fu">str_sub</span>(Score, <span class="sc">-</span><span class="dv">1</span>)),</span>
 <span id="cb13-3"><a href="#cb13-3"></a>       <span class="at">win =</span> <span class="fu">as.integer</span>(<span class="fu">str_sub</span>(Score, <span class="dv">1</span>,<span class="dv">1</span>)))</span>
 <span id="cb13-4"><a href="#cb13-4"></a>       <span class="co">#establishes the number of legs won/lost</span></span>
-<span id="cb13-5"><a href="#cb13-5"></a>       <span class="co">#saves them in data set as columns</span></span>
-<span id="cb13-6"><a href="#cb13-6"></a></span>
-<span id="cb13-7"><a href="#cb13-7"></a>Littler <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Luke Littler"</span>], </span>
-<span id="cb13-8"><a href="#cb13-8"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Luke Littler"</span>]))</span>
-<span id="cb13-9"><a href="#cb13-9"></a><span class="co">#Legs won when Littler is listed as loser/winner</span></span>
-<span id="cb13-10"><a href="#cb13-10"></a></span>
-<span id="cb13-11"><a href="#cb13-11"></a>Humphries <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Luke Humphries"</span>], </span>
-<span id="cb13-12"><a href="#cb13-12"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Luke Humphries"</span>]))</span>
-<span id="cb13-13"><a href="#cb13-13"></a></span>
-<span id="cb13-14"><a href="#cb13-14"></a>Gerwen <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Michael van Gerwen"</span>], </span>
-<span id="cb13-15"><a href="#cb13-15"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Michael van Gerwen"</span>]))</span>
-<span id="cb13-16"><a href="#cb13-16"></a></span>
-<span id="cb13-17"><a href="#cb13-17"></a>Smith <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Michael Smith"</span>], </span>
-<span id="cb13-18"><a href="#cb13-18"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Michael Smith"</span>]))</span>
-<span id="cb13-19"><a href="#cb13-19"></a></span>
-<span id="cb13-20"><a href="#cb13-20"></a>Aspinall <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Nathan Aspinall"</span>], </span>
-<span id="cb13-21"><a href="#cb13-21"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Nathan Aspinall"</span>]))</span>
-<span id="cb13-22"><a href="#cb13-22"></a></span>
-<span id="cb13-23"><a href="#cb13-23"></a>Cross <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Rob Cross"</span>], </span>
-<span id="cb13-24"><a href="#cb13-24"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Rob Cross"</span>]))</span>
-<span id="cb13-25"><a href="#cb13-25"></a></span>
-<span id="cb13-26"><a href="#cb13-26"></a>Price <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Gerwyn Price"</span>], </span>
-<span id="cb13-27"><a href="#cb13-27"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Gerwyn Price"</span>]))</span>
-<span id="cb13-28"><a href="#cb13-28"></a></span>
-<span id="cb13-29"><a href="#cb13-29"></a>Wright <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Peter Wright"</span>], </span>
-<span id="cb13-30"><a href="#cb13-30"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Peter Wright"</span>]))</span>
-<span id="cb13-31"><a href="#cb13-31"></a></span>
-<span id="cb13-32"><a href="#cb13-32"></a>win <span class="ot">=</span> <span class="fu">list</span>(Littler,</span>
-<span id="cb13-33"><a href="#cb13-33"></a>           Humphries,</span>
-<span id="cb13-34"><a href="#cb13-34"></a>           Gerwen,</span>
-<span id="cb13-35"><a href="#cb13-35"></a>           Smith,</span>
-<span id="cb13-36"><a href="#cb13-36"></a>           Aspinall,</span>
-<span id="cb13-37"><a href="#cb13-37"></a>           Cross,</span>
-<span id="cb13-38"><a href="#cb13-38"></a>           Price,</span>
-<span id="cb13-39"><a href="#cb13-39"></a>           Wright)</span>
-<span id="cb13-40"><a href="#cb13-40"></a><span class="co">#makes list of each player's wins for next steps</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-5"><a href="#cb13-5"></a>       <span class="co">#ensures they're saved as integars</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>       <span class="co">#saves them in data set as columns</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a></span>
+<span id="cb13-8"><a href="#cb13-8"></a>Littler <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Luke Littler"</span>], </span>
+<span id="cb13-9"><a href="#cb13-9"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Luke Littler"</span>]))</span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="co">#Legs won when Littler is listed as loser/winner</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a></span>
+<span id="cb13-12"><a href="#cb13-12"></a>Humphries <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Luke Humphries"</span>], </span>
+<span id="cb13-13"><a href="#cb13-13"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Luke Humphries"</span>]))</span>
+<span id="cb13-14"><a href="#cb13-14"></a></span>
+<span id="cb13-15"><a href="#cb13-15"></a>Gerwen <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Michael van Gerwen"</span>], </span>
+<span id="cb13-16"><a href="#cb13-16"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Michael van Gerwen"</span>]))</span>
+<span id="cb13-17"><a href="#cb13-17"></a></span>
+<span id="cb13-18"><a href="#cb13-18"></a>Smith <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Michael Smith"</span>], </span>
+<span id="cb13-19"><a href="#cb13-19"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Michael Smith"</span>]))</span>
+<span id="cb13-20"><a href="#cb13-20"></a></span>
+<span id="cb13-21"><a href="#cb13-21"></a>Aspinall <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Nathan Aspinall"</span>], </span>
+<span id="cb13-22"><a href="#cb13-22"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Nathan Aspinall"</span>]))</span>
+<span id="cb13-23"><a href="#cb13-23"></a></span>
+<span id="cb13-24"><a href="#cb13-24"></a>Cross <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Rob Cross"</span>], </span>
+<span id="cb13-25"><a href="#cb13-25"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Rob Cross"</span>]))</span>
+<span id="cb13-26"><a href="#cb13-26"></a></span>
+<span id="cb13-27"><a href="#cb13-27"></a>Price <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Gerwyn Price"</span>], </span>
+<span id="cb13-28"><a href="#cb13-28"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Gerwyn Price"</span>]))</span>
+<span id="cb13-29"><a href="#cb13-29"></a></span>
+<span id="cb13-30"><a href="#cb13-30"></a>Wright <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(dart.data.cleaned<span class="sc">$</span>win[dart.data.cleaned<span class="sc">$</span>Winner<span class="sc">==</span><span class="st">"Peter Wright"</span>], </span>
+<span id="cb13-31"><a href="#cb13-31"></a>dart.data.cleaned<span class="sc">$</span>lose[dart.data.cleaned<span class="sc">$</span>Loser<span class="sc">==</span><span class="st">"Peter Wright"</span>]))</span>
+<span id="cb13-32"><a href="#cb13-32"></a></span>
+<span id="cb13-33"><a href="#cb13-33"></a>win <span class="ot">=</span> <span class="fu">list</span>(Littler,</span>
+<span id="cb13-34"><a href="#cb13-34"></a>           Humphries,</span>
+<span id="cb13-35"><a href="#cb13-35"></a>           Gerwen,</span>
+<span id="cb13-36"><a href="#cb13-36"></a>           Smith,</span>
+<span id="cb13-37"><a href="#cb13-37"></a>           Aspinall,</span>
+<span id="cb13-38"><a href="#cb13-38"></a>           Cross,</span>
+<span id="cb13-39"><a href="#cb13-39"></a>           Price,</span>
+<span id="cb13-40"><a href="#cb13-40"></a>           Wright)</span>
+<span id="cb13-41"><a href="#cb13-41"></a><span class="co">#makes list of each player's wins for next steps</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p></p>
@@ -829,42 +840,29 @@ Table&nbsp;1: Each Player’s Win Record.
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>daltbinom <span class="ot">=</span> <span class="cf">function</span>(x, size, prob, theta){</span>
-<span id="cb14-2"><a href="#cb14-2"></a> normalizing.constant <span class="ot">=</span> <span class="dv">0</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a></span>
-<span id="cb14-4"><a href="#cb14-4"></a> <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>size){</span>
-<span id="cb14-5"><a href="#cb14-5"></a> normalizing.constant <span class="ot">&lt;-</span> normalizing.constant <span class="sc">+</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a> <span class="fu">choose</span>(size, j) <span class="sc">*</span> prob<span class="sc">^</span>j <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>prob)<span class="sc">^</span>(size<span class="sc">-</span>j) <span class="sc">*</span> theta<span class="sc">^</span>(j<span class="sc">*</span>(size<span class="sc">-</span>j))</span>
-<span id="cb14-7"><a href="#cb14-7"></a> }</span>
-<span id="cb14-8"><a href="#cb14-8"></a> (<span class="dv">1</span><span class="sc">/</span>normalizing.constant) <span class="sc">*</span></span>
-<span id="cb14-9"><a href="#cb14-9"></a> <span class="fu">choose</span>(size, x) <span class="sc">*</span> prob<span class="sc">^</span>x <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>prob)<span class="sc">^</span>(size<span class="sc">-</span>x) <span class="sc">*</span> theta<span class="sc">^</span>(x<span class="sc">*</span>(size<span class="sc">-</span>x)) <span class="sc">*</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a> (x<span class="sc">&gt;=</span><span class="dv">0</span>)<span class="sc">*</span>(x<span class="sc">&lt;=</span>size)</span>
-<span id="cb14-11"><a href="#cb14-11"></a> }</span>
-<span id="cb14-12"><a href="#cb14-12"></a><span class="co">#adjusting past function for multiplicative beta binomial distribution</span></span>
-<span id="cb14-13"><a href="#cb14-13"></a></span>
-<span id="cb14-14"><a href="#cb14-14"></a>llaltbinom <span class="ot">=</span> <span class="cf">function</span>(par, data, <span class="at">mle=</span>F){</span>
-<span id="cb14-15"><a href="#cb14-15"></a>  prob <span class="ot">=</span> <span class="fu">ifelse</span>(mle, <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>par[<span class="dv">1</span>])), par[<span class="dv">1</span>])</span>
-<span id="cb14-16"><a href="#cb14-16"></a>  theta <span class="ot">=</span> <span class="fu">ifelse</span>(mle, <span class="fu">exp</span>(par[<span class="dv">2</span>]), par[<span class="dv">2</span>])</span>
-<span id="cb14-17"><a href="#cb14-17"></a>  ll <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">log</span>(<span class="fu">daltbinom</span>(data, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">prob =</span> prob, <span class="at">theta =</span> theta)))</span>
-<span id="cb14-18"><a href="#cb14-18"></a> <span class="fu">ifelse</span>(mle, <span class="sc">-</span>ll, ll)</span>
-<span id="cb14-19"><a href="#cb14-19"></a> }</span>
-<span id="cb14-20"><a href="#cb14-20"></a></span>
-<span id="cb14-21"><a href="#cb14-21"></a>results <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb14-22"><a href="#cb14-22"></a>  <span class="at">Player =</span> <span class="fu">c</span>(<span class="st">"Luke Littler"</span>, <span class="st">"Luke Humphries"</span>, <span class="st">"Michael van Gerwen"</span>, </span>
-<span id="cb14-23"><a href="#cb14-23"></a>  <span class="st">"Michael Smith"</span>, <span class="st">"Nathan Aspinall"</span>, <span class="st">"Rob Cross"</span>, </span>
-<span id="cb14-24"><a href="#cb14-24"></a>  <span class="st">"Gerwyn Price"</span>, <span class="st">"Peter Wright"</span>),</span>
-<span id="cb14-25"><a href="#cb14-25"></a>  <span class="at">Probability =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">8</span>),</span>
-<span id="cb14-26"><a href="#cb14-26"></a>  <span class="at">Theta =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">8</span>))</span>
-<span id="cb14-27"><a href="#cb14-27"></a>  <span class="co">#ensures each player has a prob and theta value</span></span>
-<span id="cb14-28"><a href="#cb14-28"></a></span>
-<span id="cb14-29"><a href="#cb14-29"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(win)){</span>
-<span id="cb14-30"><a href="#cb14-30"></a> mle <span class="ot">&lt;-</span> <span class="fu">optim</span>(<span class="at">par =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="co"># initial guess</span></span>
-<span id="cb14-31"><a href="#cb14-31"></a>   <span class="at">fn =</span> llaltbinom,</span>
-<span id="cb14-32"><a href="#cb14-32"></a>   <span class="at">data=</span> win[[i]],</span>
-<span id="cb14-33"><a href="#cb14-33"></a>   <span class="at">mle=</span>T) <span class="co"># minimizing!!!!!</span></span>
-<span id="cb14-34"><a href="#cb14-34"></a> results<span class="sc">$</span>Probability[i] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>mle<span class="sc">$</span>par[<span class="dv">1</span>]))</span>
-<span id="cb14-35"><a href="#cb14-35"></a> results<span class="sc">$</span>Theta[i]<span class="ot">&lt;-</span> <span class="fu">exp</span>(mle<span class="sc">$</span>par[<span class="dv">2</span>])</span>
-<span id="cb14-36"><a href="#cb14-36"></a>} <span class="co">#optimizes the past function for the mle parameter</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>llaltbinom <span class="ot">=</span> <span class="cf">function</span>(par, data, <span class="at">mle=</span>F){</span>
+<span id="cb14-2"><a href="#cb14-2"></a>  prob <span class="ot">=</span> <span class="fu">ifelse</span>(mle, <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>par[<span class="dv">1</span>])), par[<span class="dv">1</span>])</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  theta <span class="ot">=</span> <span class="fu">ifelse</span>(mle, <span class="fu">exp</span>(par[<span class="dv">2</span>]), par[<span class="dv">2</span>])</span>
+<span id="cb14-4"><a href="#cb14-4"></a>  ll <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">log</span>(<span class="fu">daltbinom</span>(data, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">prob =</span> prob, <span class="at">theta =</span> theta)))</span>
+<span id="cb14-5"><a href="#cb14-5"></a> <span class="fu">ifelse</span>(mle, <span class="sc">-</span>ll, ll)</span>
+<span id="cb14-6"><a href="#cb14-6"></a> }</span>
+<span id="cb14-7"><a href="#cb14-7"></a></span>
+<span id="cb14-8"><a href="#cb14-8"></a>results <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb14-9"><a href="#cb14-9"></a>  <span class="at">Player =</span> <span class="fu">c</span>(<span class="st">"Luke Littler"</span>, <span class="st">"Luke Humphries"</span>, <span class="st">"Michael van Gerwen"</span>, </span>
+<span id="cb14-10"><a href="#cb14-10"></a>  <span class="st">"Michael Smith"</span>, <span class="st">"Nathan Aspinall"</span>, <span class="st">"Rob Cross"</span>, </span>
+<span id="cb14-11"><a href="#cb14-11"></a>  <span class="st">"Gerwyn Price"</span>, <span class="st">"Peter Wright"</span>),</span>
+<span id="cb14-12"><a href="#cb14-12"></a>  <span class="at">Probability =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">8</span>),</span>
+<span id="cb14-13"><a href="#cb14-13"></a>  <span class="at">Theta =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">8</span>))</span>
+<span id="cb14-14"><a href="#cb14-14"></a>  <span class="co">#ensures each player has a prob and theta value</span></span>
+<span id="cb14-15"><a href="#cb14-15"></a></span>
+<span id="cb14-16"><a href="#cb14-16"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(win)){</span>
+<span id="cb14-17"><a href="#cb14-17"></a> mle <span class="ot">&lt;-</span> <span class="fu">optim</span>(<span class="at">par =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="co"># initial guess</span></span>
+<span id="cb14-18"><a href="#cb14-18"></a>   <span class="at">fn =</span> llaltbinom,</span>
+<span id="cb14-19"><a href="#cb14-19"></a>   <span class="at">data=</span> win[[i]],</span>
+<span id="cb14-20"><a href="#cb14-20"></a>   <span class="at">mle=</span>T) <span class="co"># minimizing!!!!!</span></span>
+<span id="cb14-21"><a href="#cb14-21"></a> results<span class="sc">$</span>Probability[i] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>mle<span class="sc">$</span>par[<span class="dv">1</span>]))</span>
+<span id="cb14-22"><a href="#cb14-22"></a> results<span class="sc">$</span>Theta[i]<span class="ot">&lt;-</span> <span class="fu">exp</span>(mle<span class="sc">$</span>par[<span class="dv">2</span>])</span>
+<span id="cb14-23"><a href="#cb14-23"></a>} <span class="co">#optimizes the past function for the mle parameter</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p></p>
@@ -943,7 +941,7 @@ Table&nbsp;2: Each Player’s Parameters.
 </div>
 </div>
 <p></p>
-<p>The probability parameter indicates what an accurate estimate of a given player’s probability of winning a match. The theta parameter is a good estimate for how likely the match is to be close. A higher theta value indicates a greater liklihood of a close match. Therefore, a low theta value and a low probability indicate a high chance of losing quickly in a match. A high theta value and a low probability indicate a greater chance to lose, but it is more likely to be close and there is a greater chance to win than if the theta value was lower. A low theta value and a high probability indicate a greater chance to win, but it is less likely to be close and thus, there is a greater chance to lose than if the theta value was higher. A high theta value and a high probability indicate a high chance of winning quickly in a match.</p>
+<p>The probability parameter indicates what an accurate estimate of a given player’s probability of winning a match, with some variation depending on the theta value. The theta parameter is a good estimate for how likely the match is to be close. A higher theta value indicates a greater liklihood of a close match. Therefore, a low theta value and a low probability indicate a high chance of losing quickly in a match. A high theta value and a low probability indicate a greater chance to lose, but it is more likely to be close and there is a greater chance to win than if the theta value was lower. A low theta value and a high probability indicate a greater chance to win, but it is less likely to be close and thus, there is a greater chance to lose than if the theta value was higher. A high theta value and a high probability indicate a high chance of winning quickly in a match.</p>
 </section>
 <section id="althams-multiplicative-beta-binomial-distribution-1" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="althams-multiplicative-beta-binomial-distribution-1"><span class="header-section-number">5.3</span> Altham’s Multiplicative Beta Binomial Distribution</h2>
@@ -1025,18 +1023,54 @@ sd(X) &amp;= \sqrt{\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}}
 </div>
 <p></p>
 <p></p>
+<div class="cell" data-layout-align="center" data-scale="80%">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>p_grid <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
+<span id="cb17-2"><a href="#cb17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3"></a>ggdat <span class="ot">&lt;-</span> results<span class="fl">.2</span> <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a>          <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">as.factor</span>(Player)) <span class="sc">|&gt;</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>          <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a>          <span class="fu">do</span>({</span>
+<span id="cb17-7"><a href="#cb17-7"></a>            <span class="fu">data.frame</span>(</span>
+<span id="cb17-8"><a href="#cb17-8"></a>              <span class="at">Player =</span> .<span class="sc">$</span>Player,</span>
+<span id="cb17-9"><a href="#cb17-9"></a>              <span class="at">p =</span> p_grid,</span>
+<span id="cb17-10"><a href="#cb17-10"></a>              <span class="at">density =</span> <span class="fu">dbeta</span>(p_grid, .<span class="sc">$</span>Alpha, .<span class="sc">$</span>Beta))</span>
+<span id="cb17-11"><a href="#cb17-11"></a>              }) <span class="sc">|&gt;</span></span>
+<span id="cb17-12"><a href="#cb17-12"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb17-13"><a href="#cb17-13"></a></span>
+<span id="cb17-14"><a href="#cb17-14"></a><span class="fu">ggplot</span>(ggdat, <span class="fu">aes</span>(<span class="at">x =</span> p, <span class="at">y =</span> density)) <span class="sc">+</span></span>
+<span id="cb17-15"><a href="#cb17-15"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb17-16"><a href="#cb17-16"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Player, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb17-17"><a href="#cb17-17"></a>  <span class="fu">labs</span>(</span>
+<span id="cb17-18"><a href="#cb17-18"></a>    <span class="at">title =</span> <span class="st">"Beta Distributions by Player"</span>,</span>
+<span id="cb17-19"><a href="#cb17-19"></a>    <span class="at">x =</span> <span class="st">"Probability (p)"</span>,</span>
+<span id="cb17-20"><a href="#cb17-20"></a>    <span class="at">y =</span> <span class="st">"Density"</span></span>
+<span id="cb17-21"><a href="#cb17-21"></a>  ) <span class="sc">+</span></span>
+<span id="cb17-22"><a href="#cb17-22"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Lab10WriteUp_files/figure-html/Beta.distributions-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p>
+<p></p>
 <div class="cell" data-tbl-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>results<span class="fl">.2</span> <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">select</span>(Player,</span>
-<span id="cb17-3"><a href="#cb17-3"></a>       Alpha,</span>
-<span id="cb17-4"><a href="#cb17-4"></a>       Beta,</span>
-<span id="cb17-5"><a href="#cb17-5"></a>       Theta,</span>
-<span id="cb17-6"><a href="#cb17-6"></a>       Mean,</span>
-<span id="cb17-7"><a href="#cb17-7"></a>       SD)<span class="sc">|&gt;</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb17-9"><a href="#cb17-9"></a><span class="co">#creates a table with all parameter and distribution values</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>results<span class="fl">.2</span> <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">select</span>(Player,</span>
+<span id="cb18-3"><a href="#cb18-3"></a>       Alpha,</span>
+<span id="cb18-4"><a href="#cb18-4"></a>       Beta,</span>
+<span id="cb18-5"><a href="#cb18-5"></a>       Theta,</span>
+<span id="cb18-6"><a href="#cb18-6"></a>       Mean,</span>
+<span id="cb18-7"><a href="#cb18-7"></a>       SD)<span class="sc">|&gt;</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb18-9"><a href="#cb18-9"></a><span class="co">#creates a table with all parameter and distribution values</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="tbl-Parameters-MBB" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-align="center">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -1129,6 +1163,8 @@ Table&nbsp;3: Each Player’s Multiplicative Beta Binomial Parameters.
 </div>
 </div>
 <p></p>
+<p><strong>Comments:</strong></p>
+<p>The maximum likelihood estimates demonstrate that when the ratio of <span class="math inline">\(\alpha\)</span> to <span class="math inline">\(\beta\)</span> is closer to 1, the mean probability of winning a leg increases with some variability due to the estimate of theta (as theta increases, the standard deviation increases).</p>
 </section>
 <section id="executive-summary" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="executive-summary"><span class="header-section-number">5.4</span> Executive Summary</h2>

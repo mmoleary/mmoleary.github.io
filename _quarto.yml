@@ -18,6 +18,7 @@ website:
       - Lab8/Lab8WriteUp.qmd
       - Lab10/Lab10WriteUp.qmd
       - Lab11/Lab11WriteUp.qmd
+      - Review/Probability.qmd
 
 format:
   html:

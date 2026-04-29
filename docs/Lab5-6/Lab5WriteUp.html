@@ -424,7 +424,7 @@ window.Quarto = {
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>dat.kitsberg.cleaned<span class="ot">=</span>dat.kitsberg.cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">mutate</span>(<span class="at">CellType =</span> <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"mono"</span>, <span class="st">"monocytes"</span>, <span class="st">"macrophages"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">mutate</span>(<span class="at">CellType =</span> <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"mono"</span>, <span class="st">"Monocytes"</span>, <span class="st">"Macrophages"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">mutate</span>(<span class="at">SampleType =</span> <span class="fu">if_else</span>(SampleType <span class="sc">==</span> <span class="st">"primary"</span>, <span class="st">"Healthy Donor"</span>, <span class="st">"THP-1"</span>))<span class="sc">|&gt;</span> </span>
 <span id="cb6-4"><a href="#cb6-4"></a>  <span class="fu">mutate</span>(<span class="at">Treatment =</span> <span class="fu">if_else</span>(Treatment <span class="sc">==</span> <span class="st">"uninfected"</span>, <span class="st">"Uninfected"</span>, <span class="st">"12 Hours Post-Infection"</span>))</span>
 <span id="cb6-5"><a href="#cb6-5"></a><span class="co">#updates the data set with more precise names with mutate</span></span>
@@ -443,15 +443,18 @@ window.Quarto = {
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>dat.kitsberg <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Fig.3B-Table 1.csv"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2"></a>dat.kitsberg.cleaned <span class="ot">=</span> dat.kitsberg <span class="sc">|&gt;</span> <span class="fu">separate</span>(<span class="st">"sample"</span>, </span>
-<span id="cb7-3"><a href="#cb7-3"></a>                                                <span class="fu">c</span>(<span class="st">"SampleType"</span>, <span class="st">"CellType"</span>, <span class="st">"Treatment"</span>))<span class="sc">|&gt;</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a>                                       <span class="fu">filter</span>(Treatment <span class="sc">==</span> <span class="st">"12hpi"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>                                       <span class="fu">mutate</span>(<span class="at">CellType =</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a>                                       <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"MDM"</span>, <span class="st">"mac"</span>,CellType))<span class="sc">|&gt;</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a>                                       <span class="fu">filter</span>(CellType <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"mac"</span>, <span class="st">"mono"</span>))<span class="sc">|&gt;</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>  <span class="fu">mutate</span>(<span class="at">CellType =</span> <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"mono"</span>, <span class="st">"monocytes"</span>, <span class="st">"macrophages"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a>  <span class="fu">mutate</span>(<span class="at">SampleType =</span> <span class="fu">if_else</span>(SampleType <span class="sc">==</span> <span class="st">"primary"</span>, <span class="st">"Healthy Donor"</span>, <span class="st">"THP-1"</span>))<span class="sc">|&gt;</span> </span>
-<span id="cb7-10"><a href="#cb7-10"></a>  <span class="fu">mutate</span>(<span class="at">Treatment =</span> <span class="fu">if_else</span>(Treatment <span class="sc">==</span> <span class="st">"uninfected"</span>, <span class="st">"Uninfected"</span>, <span class="st">"12 Hours Post-Infection"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-2"><a href="#cb7-2"></a>dat.kitsberg.cleaned <span class="ot">=</span> dat.kitsberg <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">separate</span>(<span class="st">"sample"</span>,<span class="fu">c</span>(<span class="st">"SampleType"</span>, <span class="st">"CellType"</span>, <span class="st">"Treatment"</span>))<span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">filter</span>(Treatment <span class="sc">==</span> <span class="st">"12hpi"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">mutate</span>(<span class="at">CellType =</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"MDM"</span>, <span class="st">"mac"</span>,CellType))<span class="sc">|&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="fu">filter</span>(CellType <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"mac"</span>, <span class="st">"mono"</span>))<span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>  <span class="fu">mutate</span>(<span class="at">CellType =</span> </span>
+<span id="cb7-9"><a href="#cb7-9"></a>    <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"mono"</span>, <span class="st">"Monocytes"</span>, <span class="st">"Macrophages"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>  <span class="fu">mutate</span>(<span class="at">SampleType =</span> </span>
+<span id="cb7-11"><a href="#cb7-11"></a>    <span class="fu">if_else</span>(SampleType <span class="sc">==</span> <span class="st">"primary"</span>, <span class="st">"Healthy Donor"</span>, <span class="st">"THP-1"</span>))<span class="sc">|&gt;</span> </span>
+<span id="cb7-12"><a href="#cb7-12"></a>  <span class="fu">mutate</span>(<span class="at">Treatment =</span> </span>
+<span id="cb7-13"><a href="#cb7-13"></a>    <span class="fu">if_else</span>(Treatment <span class="sc">==</span> <span class="st">"uninfected"</span>, <span class="st">"Uninfected"</span>, <span class="st">"12 Hours Post-Infection"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p></p>
@@ -468,17 +471,17 @@ window.Quarto = {
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">ggplot</span>(dat.kitsberg.cleaned) <span class="sc">+</span> <span class="co"># Specify Data</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">x =</span> CellType, <span class="co"># Specify no grouping</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a>                <span class="at">y =</span>  viruses.within.nucleus), <span class="co"># Specify y-axis</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a>                <span class="at">fill =</span> <span class="st">"lightgrey"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span> <span class="co"># A transparent light grey</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> CellType, <span class="co"># Specify no grouping</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a>                 <span class="at">y =</span>  viruses.within.nucleus), <span class="co"># Specify y-axis</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a>                 <span class="at">width =</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># A cleaner theme</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="co"># Specify axis labels</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a>     <span class="at">y =</span> <span class="st">"HCMV Genomes in the Nucleus"</span>) <span class="sc">+</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="fu">ggtitle</span>(<span class="st">"HCMV Genomes in the Nucleus in Kitsberg Data"</span>) <span class="sc">+</span> <span class="co"># Plot title</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="fu">facet_wrap</span>(<span class="sc">~</span> SampleType, , <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">x =</span> CellType, <span class="co"># Specify no grouping</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>                  <span class="at">y =</span> viruses.within.nucleus), <span class="co"># Specify y-axis</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>                  <span class="at">fill =</span> <span class="st">"lightgrey"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span> <span class="co"># A transparent light grey</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> CellType, <span class="co"># Specify no grouping</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>                   <span class="at">y =</span> viruses.within.nucleus), <span class="co"># Specify y-axis</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>                   <span class="at">width =</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># A cleaner theme</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="co"># Specify axis labels</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a>      <span class="at">y =</span> <span class="st">"HCMV Genomes in the Nucleus"</span>) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a> <span class="fu">ggtitle</span>(<span class="st">"HCMV Genomes in the Nucleus in Kitsberg Data"</span>) <span class="sc">+</span> <span class="co"># Plot title</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a> <span class="fu">facet_wrap</span>(<span class="sc">~</span> SampleType, , <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-Viruses-SampleType" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -494,6 +497,7 @@ Figure&nbsp;1: Viruses within Nucleus of Cells by Sample Type
 </div>
 </div>
 <p></p>
+<p>This graphical summary demonstrates that in both healthy donors and those with THP-1 there are typically more HCMV genomes in the nucleaus of macrophages. In both the healthy donors and THP-1 donors, there were few instances of the HCMV genomes in the nucleus of the monocytes, both only had a few outliers. However, this graph does not properly represent the data as it does not show the count of the HCMV Genomes in the nucleus of the different cells of different types of patients. A bar plot would be helpful.</p>
 </section>
 <section id="part-b-1" class="level3" data-number="1.5.2">
 <h3 data-number="1.5.2" class="anchored" data-anchor-id="part-b-1"><span class="header-section-number">1.5.2</span> Part B</h3>
@@ -505,7 +509,7 @@ Figure&nbsp;1: Viruses within Nucleus of Cells by Sample Type
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>dat.kitsberg.cleaned.summary <span class="ot">&lt;-</span> dat.kitsberg.cleaned <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">group_by</span>(SampleType) <span class="sc">|&gt;</span> <span class="co">#seperates data by sample category</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">group_by</span>(SampleType, CellType) <span class="sc">|&gt;</span> <span class="co">#seperates data by sample category</span></span>
 <span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">summarize</span>( <span class="co">#calculates data for a table with the following measures</span></span>
 <span id="cb9-4"><a href="#cb9-4"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
 <span id="cb9-5"><a href="#cb9-5"></a>    <span class="at">Mean =</span> <span class="fu">mean</span>(viruses.within.nucleus, <span class="at">na.rm =</span> T),</span>
@@ -529,18 +533,20 @@ Table&nbsp;1: Viruses within Nucleus of Cells by Sample Type
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 6%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 10%">
-<col style="width: 6%">
-<col style="width: 13%">
-<col style="width: 24%">
+<col style="width: 17%">
+<col style="width: 15%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 5%">
+<col style="width: 11%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">SampleType</th>
+<th style="text-align: left;">CellType</th>
 <th style="text-align: right;">n</th>
 <th style="text-align: right;">Mean</th>
 <th style="text-align: right;">SD</th>
@@ -553,23 +559,47 @@ Table&nbsp;1: Viruses within Nucleus of Cells by Sample Type
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Healthy Donor</td>
-<td style="text-align: right;">180</td>
-<td style="text-align: right;">0.194</td>
-<td style="text-align: right;">0.474</td>
+<td style="text-align: left;">Macrophages</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">0.366</td>
+<td style="text-align: right;">0.604</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.690</td>
+<td style="text-align: right;">3.038</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Healthy Donor</td>
+<td style="text-align: left;">Monocytes</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">0.107</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">2.727</td>
-<td style="text-align: right;">8.569</td>
+<td style="text-align: right;">9.008</td>
+<td style="text-align: right;">80.069</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">THP-1</td>
+<td style="text-align: left;">Macrophages</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">0.329</td>
+<td style="text-align: right;">0.573</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.530</td>
+<td style="text-align: right;">1.313</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">THP-1</td>
-<td style="text-align: right;">282</td>
-<td style="text-align: right;">0.216</td>
-<td style="text-align: right;">0.491</td>
+<td style="text-align: left;">Monocytes</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">0.045</td>
+<td style="text-align: right;">0.247</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">2.218</td>
-<td style="text-align: right;">4.137</td>
+<td style="text-align: right;">5.968</td>
+<td style="text-align: right;">38.005</td>
 </tr>
 </tbody>
 </table>
@@ -579,6 +609,7 @@ Table&nbsp;1: Viruses within Nucleus of Cells by Sample Type
 </div>
 </div>
 <p></p>
+<p>This table demonstrates that in patients with THP-1, the average amount of viruses within the nucleus of cells is higher than healthy donors in the monocytes and lower in macrophages. It is important to note that all of these data distributions are right skewed and are leptokurtic, demonstrating that the prescence of viruses within any cells are fairly uncommon, which is further supported by the median of 0 (a more reliable measure of center than the mean with the amount of skew).</p>
 </section>
 </section>
 </section>
@@ -632,17 +663,18 @@ Table&nbsp;1: Viruses within Nucleus of Cells by Sample Type
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>dat.bal.cleaned <span class="ot">=</span> dat.bal.cleaned <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
-<span id="cb12-2"><a href="#cb12-2"></a>  <span class="at">OriginCountry =</span> <span class="fu">case_when</span>(</span>
-<span id="cb12-3"><a href="#cb12-3"></a>      Japan <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Japan"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4"></a>      China..People.s.Republic.Of <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"China"</span>,</span>
-<span id="cb12-5"><a href="#cb12-5"></a>      Philippines <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Philippines"</span>,</span>
-<span id="cb12-6"><a href="#cb12-6"></a>      Korea..South <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"S. Korea"</span>,</span>
-<span id="cb12-7"><a href="#cb12-7"></a>      Others.Country.Build <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Other Country"</span></span>
-<span id="cb12-8"><a href="#cb12-8"></a>      )</span>
-<span id="cb12-9"><a href="#cb12-9"></a>    )</span>
-<span id="cb12-10"><a href="#cb12-10"></a>    <span class="co">#create a new column, "OriginCountry" with mutate</span></span>
-<span id="cb12-11"><a href="#cb12-11"></a>    <span class="co">#when a given country column is 1, make that country's name the value in the new column</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>dat.bal.cleaned <span class="ot">=</span> dat.bal.cleaned <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">mutate</span>(<span class="at">OriginCountry =</span> </span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="co">#create a new column, "OriginCountry" with mutate</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>    <span class="fu">case_when</span>(</span>
+<span id="cb12-5"><a href="#cb12-5"></a>      Japan <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Japan"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6"></a>      China..People.s.Republic.Of <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"China"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7"></a>      Philippines <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Philippines"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8"></a>      Korea..South <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"S. Korea"</span>,</span>
+<span id="cb12-9"><a href="#cb12-9"></a>      Others.Country.Build <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Other Country"</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a>      )</span>
+<span id="cb12-11"><a href="#cb12-11"></a>    )</span>
+<span id="cb12-12"><a href="#cb12-12"></a>    <span class="co">#when a given country column is 1, make that country's name the value in the new column</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p></p>
@@ -766,62 +798,66 @@ Table&nbsp;1: Viruses within Nucleus of Cells by Sample Type
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>dat.bal.cleaned <span class="ot">=</span> dat.bal <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Price =</span> (<span class="dv">10</span><span class="sc">^</span>SPLog)<span class="sc">/</span><span class="dv">1000000</span>)<span class="sc">|&gt;</span> </span>
 <span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> <span class="co">#gets rid of empty cells</span></span>
 <span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">mutate</span>(<span class="at">OriginCountry =</span> </span>
-<span id="cb17-4"><a href="#cb17-4"></a>   <span class="fu">case_when</span>(</span>
-<span id="cb17-5"><a href="#cb17-5"></a>      Japan <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Japan"</span>,</span>
-<span id="cb17-6"><a href="#cb17-6"></a>      China..People.s.Republic.Of <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"China"</span>,</span>
-<span id="cb17-7"><a href="#cb17-7"></a>      Philippines <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Philippines"</span>,</span>
-<span id="cb17-8"><a href="#cb17-8"></a>      Korea..South <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"S. Korea"</span>,</span>
-<span id="cb17-9"><a href="#cb17-9"></a>      Others.Country.Build <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Other Country"</span></span>
-<span id="cb17-10"><a href="#cb17-10"></a>      )</span>
-<span id="cb17-11"><a href="#cb17-11"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb17-12"><a href="#cb17-12"></a>  <span class="fu">mutate</span>(<span class="at">Manufacturer =</span> </span>
-<span id="cb17-13"><a href="#cb17-13"></a>   <span class="fu">case_when</span>(</span>
-<span id="cb17-14"><a href="#cb17-14"></a>      Caterpillar <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Caterpillar"</span>,</span>
-<span id="cb17-15"><a href="#cb17-15"></a>      MAN.B.W <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"MAN-B&amp;W"</span>,</span>
-<span id="cb17-16"><a href="#cb17-16"></a>      Wartsila <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Wartsila"</span>,</span>
-<span id="cb17-17"><a href="#cb17-17"></a>      Mitsubishi <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Mitsubishi"</span>,</span>
-<span id="cb17-18"><a href="#cb17-18"></a>      )</span>
-<span id="cb17-19"><a href="#cb17-19"></a>    )<span class="sc">|&gt;</span></span>
-<span id="cb17-20"><a href="#cb17-20"></a>  <span class="fu">mutate</span>(<span class="at">PI.club =</span> </span>
-<span id="cb17-21"><a href="#cb17-21"></a>   <span class="fu">case_when</span>(</span>
-<span id="cb17-22"><a href="#cb17-22"></a>      Japan.P.I.Club <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Japan P&amp;I Club"</span>,</span>
-<span id="cb17-23"><a href="#cb17-23"></a>      Gard <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Gard"</span>,</span>
-<span id="cb17-24"><a href="#cb17-24"></a>      West.of.England <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"W of England"</span>,</span>
-<span id="cb17-25"><a href="#cb17-25"></a>      North.of.England <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"N of England"</span>,</span>
-<span id="cb17-26"><a href="#cb17-26"></a>      UK.P.I <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"UK P&amp;I"</span>,</span>
-<span id="cb17-27"><a href="#cb17-27"></a>      Britannia.P.I <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Britannia P&amp;I"</span>,</span>
-<span id="cb17-28"><a href="#cb17-28"></a>      London.P.I.Club <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"London P&amp;I"</span>,</span>
-<span id="cb17-29"><a href="#cb17-29"></a>      Skuld <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Skuld"</span>,</span>
-<span id="cb17-30"><a href="#cb17-30"></a>      Steamship.Mutual <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Steamship Mutual"</span>,</span>
-<span id="cb17-31"><a href="#cb17-31"></a>      Others <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Other"</span>,</span>
-<span id="cb17-32"><a href="#cb17-32"></a>      Unknown <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Unknown"</span></span>
-<span id="cb17-33"><a href="#cb17-33"></a>      )</span>
-<span id="cb17-34"><a href="#cb17-34"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb17-35"><a href="#cb17-35"></a>  <span class="fu">mutate</span>(<span class="at">Class =</span> </span>
-<span id="cb17-36"><a href="#cb17-36"></a>   <span class="fu">case_when</span>(</span>
-<span id="cb17-37"><a href="#cb17-37"></a>      Nippon.Kaiji.Kyokai..IACS. <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Nippon Kaiji Kyokai (IACS)"</span>,</span>
-<span id="cb17-38"><a href="#cb17-38"></a>      Lloyd.s.Register <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Lloyd's Register"</span>,</span>
-<span id="cb17-39"><a href="#cb17-39"></a>      Bureau.Veritas..IACS. <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Bureau Veritas (IACS)"</span>,</span>
-<span id="cb17-40"><a href="#cb17-40"></a>      Det.Norske.Veritas..IACS. <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Det Norske Veritas (IACS)"</span>,</span>
-<span id="cb17-41"><a href="#cb17-41"></a>      American.Bureau.of.Shipping..IACS. <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"American Bureau of Shipping (IACS)"</span>,</span>
-<span id="cb17-42"><a href="#cb17-42"></a>      With.Two.Classes <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Two Classes"</span>,</span>
-<span id="cb17-43"><a href="#cb17-43"></a>      Disclassed <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Disclassed"</span>,</span>
-<span id="cb17-44"><a href="#cb17-44"></a>      Others.Class <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Other"</span></span>
-<span id="cb17-45"><a href="#cb17-45"></a>      )</span>
-<span id="cb17-46"><a href="#cb17-46"></a>    )<span class="sc">|&gt;</span> </span>
-<span id="cb17-47"><a href="#cb17-47"></a>  <span class="fu">mutate</span>(<span class="at">FlagState =</span> </span>
-<span id="cb17-48"><a href="#cb17-48"></a>   <span class="fu">case_when</span>(</span>
-<span id="cb17-49"><a href="#cb17-49"></a>      Panama <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Panama"</span>,</span>
-<span id="cb17-50"><a href="#cb17-50"></a>      Marshall.Islands <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Marshall Islands"</span>,</span>
-<span id="cb17-51"><a href="#cb17-51"></a>      Liberia <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Liberia"</span>,</span>
-<span id="cb17-52"><a href="#cb17-52"></a>      Malta <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Malta"</span>,</span>
-<span id="cb17-53"><a href="#cb17-53"></a>      Hong.Kong..China <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Hong Kong"</span>,</span>
-<span id="cb17-54"><a href="#cb17-54"></a>      Singapore <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Singapore"</span>,</span>
-<span id="cb17-55"><a href="#cb17-55"></a>      Others.Flag <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Other"</span>,</span>
-<span id="cb17-56"><a href="#cb17-56"></a>      With.two.flags <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Two Flags"</span></span>
-<span id="cb17-57"><a href="#cb17-57"></a>      )</span>
-<span id="cb17-58"><a href="#cb17-58"></a>    )</span>
-<span id="cb17-59"><a href="#cb17-59"></a>    <span class="co">#See Part C for logic behind this</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb17-4"><a href="#cb17-4"></a>   <span class="co"># creates new column 'Origin Country' containing categories:</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>   <span class="fu">case_when</span>(</span>
+<span id="cb17-6"><a href="#cb17-6"></a>      Japan <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Japan"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7"></a>      China..People.s.Republic.Of <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"China"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8"></a>      Philippines <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Philippines"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9"></a>      Korea..South <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"S. Korea"</span>,</span>
+<span id="cb17-10"><a href="#cb17-10"></a>      Others.Country.Build <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Other Country"</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a>      )</span>
+<span id="cb17-12"><a href="#cb17-12"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb17-13"><a href="#cb17-13"></a>  <span class="fu">mutate</span>(<span class="at">Manufacturer =</span> </span>
+<span id="cb17-14"><a href="#cb17-14"></a>   <span class="co"># creates new column 'Manufacturer' containing categories:</span></span>
+<span id="cb17-15"><a href="#cb17-15"></a>   <span class="fu">case_when</span>(</span>
+<span id="cb17-16"><a href="#cb17-16"></a>      Caterpillar <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Caterpillar"</span>,</span>
+<span id="cb17-17"><a href="#cb17-17"></a>      MAN.B.W <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"MAN-B&amp;W"</span>,</span>
+<span id="cb17-18"><a href="#cb17-18"></a>      Wartsila <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Wartsila"</span>,</span>
+<span id="cb17-19"><a href="#cb17-19"></a>      Mitsubishi <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Mitsubishi"</span>,</span>
+<span id="cb17-20"><a href="#cb17-20"></a>      )</span>
+<span id="cb17-21"><a href="#cb17-21"></a>    )<span class="sc">|&gt;</span></span>
+<span id="cb17-22"><a href="#cb17-22"></a>  <span class="fu">mutate</span>(<span class="at">PI.club =</span> </span>
+<span id="cb17-23"><a href="#cb17-23"></a>   <span class="co"># creates new column 'PI.club' containing categories:</span></span>
+<span id="cb17-24"><a href="#cb17-24"></a>   <span class="fu">case_when</span>(</span>
+<span id="cb17-25"><a href="#cb17-25"></a>      Japan.P.I.Club <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Japan P&amp;I Club"</span>,</span>
+<span id="cb17-26"><a href="#cb17-26"></a>      Gard <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Gard"</span>,</span>
+<span id="cb17-27"><a href="#cb17-27"></a>      West.of.England <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"W of England"</span>,</span>
+<span id="cb17-28"><a href="#cb17-28"></a>      North.of.England <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"N of England"</span>,</span>
+<span id="cb17-29"><a href="#cb17-29"></a>      UK.P.I <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"UK P&amp;I"</span>,</span>
+<span id="cb17-30"><a href="#cb17-30"></a>      Britannia.P.I <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Britannia P&amp;I"</span>,</span>
+<span id="cb17-31"><a href="#cb17-31"></a>      London.P.I.Club <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"London P&amp;I"</span>,</span>
+<span id="cb17-32"><a href="#cb17-32"></a>      Skuld <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Skuld"</span>,</span>
+<span id="cb17-33"><a href="#cb17-33"></a>      Steamship.Mutual <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Steamship Mutual"</span>,</span>
+<span id="cb17-34"><a href="#cb17-34"></a>      Others <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Other"</span>,</span>
+<span id="cb17-35"><a href="#cb17-35"></a>      Unknown <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Unknown"</span></span>
+<span id="cb17-36"><a href="#cb17-36"></a>      )</span>
+<span id="cb17-37"><a href="#cb17-37"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb17-38"><a href="#cb17-38"></a>  <span class="fu">mutate</span>(<span class="at">Class =</span> </span>
+<span id="cb17-39"><a href="#cb17-39"></a>   <span class="co"># creates new column 'Class' containing categories:</span></span>
+<span id="cb17-40"><a href="#cb17-40"></a>   <span class="fu">case_when</span>(</span>
+<span id="cb17-41"><a href="#cb17-41"></a>      Nippon.Kaiji.Kyokai..IACS. <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Nippon Kaiji Kyokai (IACS)"</span>,</span>
+<span id="cb17-42"><a href="#cb17-42"></a>      Lloyd.s.Register <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Lloyd's Register"</span>,</span>
+<span id="cb17-43"><a href="#cb17-43"></a>      Bureau.Veritas..IACS. <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Bureau Veritas (IACS)"</span>,</span>
+<span id="cb17-44"><a href="#cb17-44"></a>      Det.Norske.Veritas..IACS. <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Det Norske Veritas (IACS)"</span>,</span>
+<span id="cb17-45"><a href="#cb17-45"></a>      American.Bureau.of.Shipping..IACS. <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"American Bureau of Shipping (IACS)"</span>,</span>
+<span id="cb17-46"><a href="#cb17-46"></a>      With.Two.Classes <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Two Classes"</span>,</span>
+<span id="cb17-47"><a href="#cb17-47"></a>      Disclassed <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Disclassed"</span>,</span>
+<span id="cb17-48"><a href="#cb17-48"></a>      Others.Class <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Other"</span></span>
+<span id="cb17-49"><a href="#cb17-49"></a>      )</span>
+<span id="cb17-50"><a href="#cb17-50"></a>    )<span class="sc">|&gt;</span> </span>
+<span id="cb17-51"><a href="#cb17-51"></a>  <span class="fu">mutate</span>(<span class="at">FlagState =</span> </span>
+<span id="cb17-52"><a href="#cb17-52"></a>   <span class="co"># creates new column 'FlagState' containing categories:</span></span>
+<span id="cb17-53"><a href="#cb17-53"></a>   <span class="fu">case_when</span>(</span>
+<span id="cb17-54"><a href="#cb17-54"></a>      Panama <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Panama"</span>,</span>
+<span id="cb17-55"><a href="#cb17-55"></a>      Marshall.Islands <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Marshall Islands"</span>,</span>
+<span id="cb17-56"><a href="#cb17-56"></a>      Liberia <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Liberia"</span>,</span>
+<span id="cb17-57"><a href="#cb17-57"></a>      Malta <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Malta"</span>,</span>
+<span id="cb17-58"><a href="#cb17-58"></a>      Hong.Kong..China <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Hong Kong"</span>,</span>
+<span id="cb17-59"><a href="#cb17-59"></a>      Singapore <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Singapore"</span>,</span>
+<span id="cb17-60"><a href="#cb17-60"></a>      Others.Flag <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Other"</span>,</span>
+<span id="cb17-61"><a href="#cb17-61"></a>      With.two.flags <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Two Flags"</span></span>
+<span id="cb17-62"><a href="#cb17-62"></a>      )</span>
+<span id="cb17-63"><a href="#cb17-63"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p></p>
@@ -861,8 +897,7 @@ Table&nbsp;1: Viruses within Nucleus of Cells by Sample Type
 <span id="cb18-7"><a href="#cb18-7"></a>                 <span class="at">width =</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
 <span id="cb18-8"><a href="#cb18-8"></a><span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># A cleaner theme</span></span>
 <span id="cb18-9"><a href="#cb18-9"></a><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Origin Country"</span>, <span class="co"># Specify axis labels</span></span>
-<span id="cb18-10"><a href="#cb18-10"></a>     <span class="at">y =</span> <span class="st">"Price (Millions of USD)"</span>) <span class="sc">+</span></span>
-<span id="cb18-11"><a href="#cb18-11"></a><span class="fu">ggtitle</span>(<span class="st">"Ship Prices by Origin Country"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-10"><a href="#cb18-10"></a>     <span class="at">y =</span> <span class="st">"Price (Millions of USD)"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-OriginCountry" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -878,7 +913,7 @@ Figure&nbsp;2: Prices by Origin Country
 </div>
 </div>
 <p></p>
-<p><a href="#fig-OriginCountry" class="quarto-xref">Figure&nbsp;2</a> demonstrates that most ship prices are skewed right with many outliers. Generally, most countries’ medians are between 10 and 15 million USD. Most of these countries, with maybe the exception of Japan, have interquartile ranges of about 10 million USD. From this graph, there doesn’t seem to be significant differences in ship prices due to origin country, however, China and Japan have the greatest amount of outliers with multiple ships costing more than $50 million.</p>
+<p><a href="#fig-OriginCountry" class="quarto-xref">Figure&nbsp;2</a> demonstrates that most ship prices are skewed right with many outliers. Generally, most countries’ medians are between 10 and 15 million USD. Most of these countries, with maybe the exception of Japan, have interquartile ranges of about 10 million USD. From this graph, there doesn’t seem to be major differences in ship prices due to origin country, however, China and Japan have the greatest amount of outliers with multiple ships costing more than $50 million.</p>
 <p></p>
 <div class="cell">
 <details class="code-fold">
@@ -996,7 +1031,7 @@ Table&nbsp;2: Prices by Origin Country.
 </div>
 </div>
 <p></p>
-<p><a href="#tbl-OriginCountry" class="quarto-xref">Table&nbsp;2</a> provides some greater insight as to why China and Japan may have many more outliers: they produce significantly more ships. The massive jump in number of ships produced between the Phillippines and China could explain the massive jump in number of outliers. This greater number of outliers can also explain why the means of China and Japan are closer to $17 million while the others are below $15 million (with the exception of the Philippines which just has one major outlier pulling the mean). Because the skewness of all of these distributions are fairly high, I believe the median and IQR are more accurate measures of this data. This distribution is also leptokurtic (the excess kurtosis of all countries is positive), further supporting the need to use median and interquartile range. Unlike with the violin plot, it is much more clear that China, Japan, and the Philippines are typically more expensive with a medians over $14 million, while South Korea ship prices have a median of $11.5 million and other countries have a median of $9.9 million. Based on the IQR, Japan has the greatest amount of variation, as seen in the violin plot, other countries has the least variation, and China, the Philippines, and South Korea all have around the same variation with interquartile ranges between $10 and $11 Million. Therefore, ship prices could differ based on country of origin with China, Japan, and the Phillippines typically being the most expensive. However, before any majors conclusions can be drawn, it is worth noting that these ship price variations could be caused by different countries producing different types of ships.</p>
+<p><a href="#tbl-OriginCountry" class="quarto-xref">Table&nbsp;2</a> provides some greater insight as to why China and Japan may have many more outliers: they produce significantly more ships. The massive jump in number of ships produced between the Phillippines and China could explain the massive jump in number of outliers. This greater number of outliers can also explain why the means of China and Japan are closer to $17 million while the others are below $15 million (with the exception of the Philippines which just has one major outlier pulling the mean). Because the skewness of all of these distributions are fairly high, I believe the median and IQR are more accurate measures of this data. This distribution is also leptokurtic (the excess kurtosis of all countries is positive), further supporting the need to use median and interquartile range. Unlike with the violin plot, it is much more clear that China, Japan, and the Philippines are typically more expensive with a medians over $14 million, while South Korea ship prices have a median of $11.5 million and other countries have a median of $9.9 million. Based on the IQR, Japan has the greatest amount of variation, as seen in the violin plot, other countries has the least variation, and China, the Philippines, and South Korea all have around the same variation with interquartile ranges between $10 and $11 Million. Therefore, ship prices could differ based on country of origin with China, Japan, and the Phillippines typically being the most expensive. However, before any majors conclusions can be drawn, it is worth noting that these ship price variations could be caused by different countries producing different types of ships or some other confounding variable.</p>
 </section>
 <section id="part-b-3" class="level3" data-number="2.3.2">
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="part-b-3"><span class="header-section-number">2.3.2</span> Part B</h3>
@@ -1015,8 +1050,7 @@ Table&nbsp;2: Prices by Origin Country.
 <span id="cb20-7"><a href="#cb20-7"></a>                <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> <span class="co"># Specify line color</span></span>
 <span id="cb20-8"><a href="#cb20-8"></a><span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="co"># A cleaner theme</span></span>
 <span id="cb20-9"><a href="#cb20-9"></a><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age in Years"</span>, <span class="co"># Specify axis labels</span></span>
-<span id="cb20-10"><a href="#cb20-10"></a>     <span class="at">y =</span> <span class="st">"Price (Millions of USD)"</span>) <span class="sc">+</span></span>
-<span id="cb20-11"><a href="#cb20-11"></a><span class="fu">ggtitle</span>(<span class="st">"Price based on Years"</span>) <span class="co"># Plot title</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb20-10"><a href="#cb20-10"></a>     <span class="at">y =</span> <span class="st">"Price (Millions of USD)"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-Year" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -1077,7 +1111,7 @@ Table&nbsp;3: Price (Millions of $) by Age (years).
 </div>
 </div>
 <p></p>
-<p><a href="#tbl-PriceAgeCorrelation" class="quarto-xref">Table&nbsp;3</a> shows that there is a moderately negative relationship between age and price. It is likely monotonic rather than linear as the Pearson correlation is not as strong as the Spearman correlation. But this is not diffinitive as the Kendall Tau is slighlty less strong than Pearson.</p>
+<p><a href="#tbl-PriceAgeCorrelation" class="quarto-xref">Table&nbsp;3</a> shows that there is a moderately negative relationship between age and price. It is likely monotonic rather than linear as the Pearson correlation is not as strong as the Spearman correlation. This is supported as the Kendall Tau is also shows a negative monotonic correlation</p>
 </section>
 </section>
 </section>
