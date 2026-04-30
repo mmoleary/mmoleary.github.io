@@ -8,7 +8,7 @@ website:
     style: "docked"
     search: false
     contents:
-      - href: index.qmd
+      - href: about.qmd
         text: Home
       - about.qmd
       - Lab2/Lab2WriteUp.qmd

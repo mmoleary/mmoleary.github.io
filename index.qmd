@@ -1,7 +1,20 @@
 ---
-title: "Maggie O'Leary's Portfolio"
+title: "Maggie O'Leary"
+about:
+  template: trestles
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com
 ---
 
-This is a Quarto website for my computational statistics work at Colgate Univeristy.
+Maggie O'Leary is an English and math double major at Colgate University. In her free time, she enjoys reading, playing the violin, and listening to classic rock.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+## Education
+
+Colgate University | Hamilton, NY
+ | Aug 2025 - May 2029
+
+---
+
+About this site

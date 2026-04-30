@@ -682,12 +682,16 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Maggie O’Leary’s Portfolio",
+    "title": "Maggie O’Leary",
     "section": "",
-    "text": "This is a Quarto website for my computational statistics work at Colgate Univeristy.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.",
-    "crumbs": [
-      "Home"
-    ]
+    "text": "Maggie O’Leary is an English and math double major at Colgate University. In her free time, she enjoys reading, playing the violin, and listening to classic rock."
+  },
+  {
+    "objectID": "index.html#education",
+    "href": "index.html#education",
+    "title": "Maggie O’Leary",
+    "section": "Education",
+    "text": "Education\nColgate University | Hamilton, NY | Aug 2025 - May 2029\n\nAbout this site"
   },
   {
     "objectID": "about.html",
@@ -696,7 +700,7 @@
     "section": "",
     "text": "Maggie O’Leary is an English and math double major at Colgate University. In her free time, she enjoys reading, playing the violin, and listening to classic rock.",
     "crumbs": [
-      "Maggie O'Leary"
+      "Home"
     ]
   },
   {
@@ -706,7 +710,7 @@
     "section": "Education",
     "text": "Education\nColgate University | Hamilton, NY | Aug 2025 - May 2029\n\nAbout this site",
     "crumbs": [
-      "Maggie O'Leary"
+      "Home"
     ]
   },
   {

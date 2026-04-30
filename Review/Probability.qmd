@@ -220,7 +220,7 @@ There are eight main continuous probability functions with built in r functions.
 
 8. F Distribution - a model used for statistical inference. It has a strictly positive support and is right skewed. It has two parameters: $u$, the numerator degrees of freedom, and $v$ the denominator degrees of freedom.
 
-## Continuous Probability Distribution
+## Continuous Probability Distribution Example
 
 A Toronto Blue Jays fan wants to find what the probability of Vladimir Guerrera's on base percentage (0.444) is relative to other MLB players. If the distribution of all MLB players on base average is symmetrical and the population mean is 0.322 and the population standard deviation is 0.041, what is the probability Guerrera has this OBP?
 
